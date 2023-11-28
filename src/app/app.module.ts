@@ -5,9 +5,10 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SharedModule } from './shared/shared.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatToolbarModule } from '@angular/material/toolbar';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ErrorInterceptor } from './modules/auth/services/ErrorInterceptor.service';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+
 @NgModule({
   declarations: [AppComponent],
   imports: [
@@ -15,8 +16,8 @@ import { ErrorInterceptor } from './modules/auth/services/ErrorInterceptor.servi
     AppRoutingModule,
     SharedModule,
     BrowserAnimationsModule,
-    MatToolbarModule,
     HttpClientModule,
+    MatSnackBarModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },

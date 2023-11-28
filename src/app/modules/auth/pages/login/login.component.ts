@@ -7,7 +7,7 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
-
+import { MatSnackBar } from '@angular/material/snack-bar';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -16,8 +16,8 @@ import { AuthService } from '../../services/auth.service';
 export class LoginComponent {
   constructor(
     private router: Router,
-    private formBuilder: FormBuilder,
-    private authService: AuthService
+    private authService: AuthService,
+    private _snackBar: MatSnackBar
   ) {}
 
   //
@@ -38,49 +38,28 @@ export class LoginComponent {
     const userData = this.formLogin.value;
     if (this.formLogin.valid) {
       console.log('Datos del formulario: ', userData);
+      this.authService.login(userData).subscribe(
+        (response) => {
+          if (response.succeed) {
+            console.log('datos: ', response);
+            this._snackBar.open('Inicio de sesión exitoso', 'Aceptar', {
+              duration: 3000,
+              panelClass: ['green-snackbar'],
+            });
+            // console.log('Inicio de sesión exitoso!');
+            console.log('Token de acceso:', response.result.accessToken);
+            console.log(
+              'Token de actualización:',
+              response.result.refreshToken
+            );
+            console.log('Expira en:', response.result.expiresAt);
+            this.router.navigate(['home/contacts']);
+          } else {
+            console.log('Inicio de sesión fallido:', response.message);
+          }
+        },
+        (error) => console.log(error)
+      );
     }
-
-    // const credentials = {
-    //   authUser: 'admin',
-    //   authPassword: 'admin',
-    // };
-
-    this.authService.login(userData).subscribe(
-      (data) => {
-        if (data.succeed) {
-          console.log('datos: ', data);
-          console.log('Inicio de sesión exitoso!');
-          console.log('Token de acceso:', data.result.accessToken);
-          console.log('Token de actualización:', data.result.refreshToken);
-          console.log('Expira en:', data.result.expiresAt);
-        } else {
-          console.log('Inicio de sesión fallido:', data.message);
-        }
-      },
-      (error) => console.log(error)
-    );
   }
-
-  // onSubmit() {
-  //   console.log('is form valid?', this.formLogin.valid);
-
-  //   // const { user, password } = this.formLogin.value;
-  //   if (this.formLogin.valid) {
-  //     const userData = this.formLogin.value;
-  //     console.log('Datos del formulario: ', userData);
-
-  //     //servicio de auth para autenticacion
-  //     this.authService
-  //       .login({ username: userData.user, password: userData.password })
-  //       .subscribe({
-  //         next: (response) => {
-  //           console.log('Los datos son: ', response),
-  //             this.router.navigate(['home/contacts']);
-  //         },
-  //         error: (error) => {
-  //           console.log('El error es: ', error);
-  //         },
-  //       });
-  //   }
-  // }
 }
