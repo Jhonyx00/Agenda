@@ -6,8 +6,8 @@ import { AppComponent } from './app.component';
 import { SharedModule } from './shared/shared.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { SidebarComponent } from './sidebar/sidebar.component';
-
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { ErrorInterceptor } from './modules/auth/services/ErrorInterceptor.service';
 @NgModule({
   declarations: [AppComponent],
   imports: [
@@ -16,8 +16,11 @@ import { SidebarComponent } from './sidebar/sidebar.component';
     SharedModule,
     BrowserAnimationsModule,
     MatToolbarModule,
+    HttpClientModule,
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

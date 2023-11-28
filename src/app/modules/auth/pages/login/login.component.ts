@@ -6,6 +6,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -13,27 +14,73 @@ import { Router } from '@angular/router';
   styleUrls: ['./login.component.css'],
 })
 export class LoginComponent {
-  constructor(private router: Router, private formBuilder: FormBuilder) {}
+  constructor(
+    private router: Router,
+    private formBuilder: FormBuilder,
+    private authService: AuthService
+  ) {}
 
   //
-  userControl: string = 'user';
-  passwordControl: string = 'password';
+  userControl: string = 'authUser';
+  passwordControl: string = 'authPassword';
   //
 
   formLogin = new FormGroup({
-    user: new FormControl('', [Validators.minLength(2), Validators.required]),
-    password: new FormControl('', [Validators.required]),
+    authUser: new FormControl('', [
+      Validators.minLength(2),
+      Validators.required,
+    ]),
+    authPassword: new FormControl('', [Validators.required]),
   });
 
-  onSubmit() {
+  onSubmit(): void {
     console.log('is form valid?', this.formLogin.valid);
-
-    // const { user, password } = this.formLogin.value;
+    const userData = this.formLogin.value;
     if (this.formLogin.valid) {
-      const userData = this.formLogin.value;
       console.log('Datos del formulario: ', userData);
-      this.router.navigate(['home/contacts']);
-      //servicio de auth para autenticacion
     }
+
+    // const credentials = {
+    //   authUser: 'admin',
+    //   authPassword: 'admin',
+    // };
+
+    this.authService.login(userData).subscribe(
+      (data) => {
+        if (data.succeed) {
+          console.log('datos: ', data);
+          console.log('Inicio de sesión exitoso!');
+          console.log('Token de acceso:', data.result.accessToken);
+          console.log('Token de actualización:', data.result.refreshToken);
+          console.log('Expira en:', data.result.expiresAt);
+        } else {
+          console.log('Inicio de sesión fallido:', data.message);
+        }
+      },
+      (error) => console.log(error)
+    );
   }
+
+  // onSubmit() {
+  //   console.log('is form valid?', this.formLogin.valid);
+
+  //   // const { user, password } = this.formLogin.value;
+  //   if (this.formLogin.valid) {
+  //     const userData = this.formLogin.value;
+  //     console.log('Datos del formulario: ', userData);
+
+  //     //servicio de auth para autenticacion
+  //     this.authService
+  //       .login({ username: userData.user, password: userData.password })
+  //       .subscribe({
+  //         next: (response) => {
+  //           console.log('Los datos son: ', response),
+  //             this.router.navigate(['home/contacts']);
+  //         },
+  //         error: (error) => {
+  //           console.log('El error es: ', error);
+  //         },
+  //       });
+  //   }
+  // }
 }
