@@ -6,7 +6,6 @@ import { AppComponent } from './app.component';
 import { SharedModule } from './shared/shared.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { ErrorInterceptor } from './modules/auth/services/ErrorInterceptor.service';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
@@ -19,9 +18,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     HttpClientModule,
     MatSnackBarModule,
   ],
-  providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
-  ],
+  providers: [],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

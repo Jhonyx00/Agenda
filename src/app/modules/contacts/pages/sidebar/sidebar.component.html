@@ -1,0 +1,24 @@
+<div class="bg-white p-2">
+  <button class="btn btn-primary">Nuevo contacto</button>
+</div>
+
+<div class="bg-white p-2 border border-bottom">Contactos: ({{ total }})</div>
+
+<ul class="list-group d-flex">
+  <li
+    class="list-group-item d-flex justify-content-between"
+    *ngFor="let item of contacts"
+  >
+    <div class="d-flex align-items-center w-100">
+      <img
+        src="../../assets/images/profile.svg"
+        alt=""
+        width="35"
+        class="bg-white rounded-circle"
+      />
+      <span class="px-2"> {{ item.contactFirstName }} </span>
+    </div>
+
+    <button class="btn btn-danger">✕</button>
+  </li>
+</ul>
