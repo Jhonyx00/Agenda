@@ -8,7 +8,7 @@ import { User } from 'src/app/core/models/user';
   styleUrls: ['./navbar.component.css'],
 })
 export class NavbarComponent implements OnInit {
-  constructor(private userInfoService: LocalStorageCache) {}
+  constructor() {}
   ngOnInit(): void {
     this.initUserInfo();
   }
