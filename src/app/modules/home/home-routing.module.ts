@@ -3,14 +3,22 @@ import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
   {
-    path: 'contacts',
+    path: 'contact-info',
     loadChildren: () =>
-      import('../contacts/contacts.module').then((m) => m.ContactsModule),
+      import('../contact-info/contact-info.module').then(
+        (m) => m.ContactsInfoModule
+      ),
   },
-
+  {
+    path: 'contacts-list',
+    loadChildren: () =>
+      import('../contacts-list/contacts-list.module').then(
+        (m) => m.ContactsListModule
+      ),
+  },
   {
     path: '**',
-    redirectTo: 'contacts',
+    redirectTo: 'contacts-list',
   },
 ];
 

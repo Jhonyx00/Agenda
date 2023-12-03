@@ -1,33 +1,42 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  // isAuthenticated() {
-  //   const userToken = localStorage.getItem('accessToken');
-  //   if (userToken) {
-  //     return true;
-  //   } else {
-  //     return false;
-  //   }
-  // }
+  private url = environment.API_URL;
 
-  private url = 'https://my.api.mockaroo.com/sa/exercise/auth/login';
-  private urlLogout = 'https://my.api.mockaroo.com/sa/exercise/auth/logout';
+  private urlLogin = this.url + 'auth/login';
+  private urlLogOut = this.url + 'auth/logout';
 
   constructor(private http: HttpClient) {}
+
   headers = new HttpHeaders().set('X-API-Key', '7802c4c0');
 
   login(data: any): Observable<any> {
-    return this.http.put(this.url, data, { headers: this.headers });
+    return this.http.put(this.urlLogin, data, { headers: this.headers });
   }
 
   logout(): Observable<any> {
-    return this.http.delete(this.urlLogout, {
+    if (this.getAuth() != undefined) {
+      localStorage.clear();
+      sessionStorage.clear();
+    }
+
+    return this.http.delete(this.urlLogOut, {
       headers: this.headers.set('Authorization', 'Bearer ' + '12345678at'),
     });
+  }
+
+  getAuth(): any {
+    let value = sessionStorage.getItem('user');
+
+    if (value != undefined && value != null) {
+      let auth = JSON.parse(value);
+      return auth;
+    } else return undefined;
   }
 }

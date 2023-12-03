@@ -1,22 +1,21 @@
 <div class="container-fluid">
-  <div class="row">
-    <div class="col-12 col-sm-4 col-lg-3 p-0 bg-white vh-100">
-      <app-sidebar></app-sidebar>
-    </div>
+  <div class="row d-flex justify-content-center">
+    <!-- <div class="col-12 col-sm-4 col-lg-3 p-0 bg-white vh-100">
+      <app-contacts-list></app-contacts-list>
+    </div> -->
 
-    <div class="col-12 col-sm-8 col-lg-9 p-2">
-      <h3 class="p-2">Contact info</h3>
-
-      <div
-        class="container-fluid d-flex rounded-4 flex-column p-4 bg-white shadow"
-      >
+    <div class="col-12 col-sm-10 col-lg-8 p-2">
+      <div class="d-flex rounded-4 flex-column p-4 bg-white shadow">
         <div class="d-flex align-items-center flex-column flex-lg-row">
-          <img
-            src="../../../../../assets/images/aquaman.jpg"
-            width="150"
-            class="rounded-circle p-2"
-            alt=""
-          />
+          <app-contact-image
+            style="
+              width: 8em;
+              height: 8em;
+              border: 2px solid gray;
+              border-radius: 50%;
+            "
+            [img]="contact[0].contactPhoto"
+          ></app-contact-image>
 
           <h3 class="text-center p-3">Jhonatan Reyes</h3>
         </div>

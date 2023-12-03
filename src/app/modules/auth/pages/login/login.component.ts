@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { UserService } from 'src/app/modules/auth/services/user.service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -12,7 +13,8 @@ export class LoginComponent {
   constructor(
     private router: Router,
     private authService: AuthService,
-    private _snackBar: MatSnackBar
+    private _snackBar: MatSnackBar,
+    private userService: UserService
   ) {}
 
   //
@@ -29,28 +31,22 @@ export class LoginComponent {
   });
 
   onSubmit(): void {
-    console.log('is form valid?', this.formLogin.valid);
     const userData = this.formLogin.value;
     if (this.formLogin.valid) {
-      console.log('Datos del formulario: ', userData);
-      this.authService.login(userData).subscribe(
-        (response) => {
+      this.authService.login(userData).subscribe({
+        next: (response) => {
           if (response.succeed) {
             console.log('datos: ', response);
             this._snackBar.open('¡Bienvenido!', 'Aceptar', {
               duration: 3000,
               panelClass: ['green-snackbar'],
             });
-            // console.log('Inicio de sesión exitoso!');
-            // console.log('Token de acceso:', response.result.accessToken);
-            // console.log(
-            //   'Token de actualización:',
-            //   response.result.refreshToken
-            // );
-            //
+
             localStorage.setItem('accessToken', response.result.accessToken);
             localStorage.setItem('refreshToken', response.result.refreshToken);
-            //
+
+            this.setUserInfo();
+
             this.router.navigate(['home/contacts']);
           } else {
             console.log('Inicio de sesión fallido:', response.message);
@@ -64,18 +60,34 @@ export class LoginComponent {
             );
           }
         },
-        (error) => {
+        error: (error) => {
           console.log(error);
           this._snackBar.open(
-            'Error en la comunicación con el servidor',
+            'Error en la comunicación con el servidor, intentelo más tarde',
             'Aceptar',
             {
               duration: 3000,
               panelClass: ['red-snackbar'],
             }
           );
-        }
-      );
+        },
+      });
     }
+  }
+
+  setUserInfo() {
+    let user: any;
+    this.userService.getUserInfo().subscribe({
+      next: (response) => {
+        if (response.succeed) {
+          console.log('User: ', response);
+          user = response.result.user;
+          sessionStorage.setItem('user', JSON.stringify(user));
+        }
+      },
+      error: (error) => {
+        console.log('Error', error);
+      },
+    });
   }
 }

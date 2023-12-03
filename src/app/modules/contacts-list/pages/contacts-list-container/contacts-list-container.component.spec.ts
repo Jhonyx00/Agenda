@@ -1,16 +1,15 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { SidebarComponent } from './sidebar.component';
+import { ContactsListContainerComponent } from './contacts-list-container.component';
 
 describe('SidebarComponent', () => {
-  let component: SidebarComponent;
-  let fixture: ComponentFixture<SidebarComponent>;
+  let component: ContactsListContainerComponent;
+  let fixture: ComponentFixture<ContactsListContainerComponent>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [SidebarComponent]
+      declarations: [ContactsListContainerComponent],
     });
-    fixture = TestBed.createComponent(SidebarComponent);
+    fixture = TestBed.createComponent(ContactsListContainerComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

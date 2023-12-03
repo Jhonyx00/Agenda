@@ -1,0 +1,13 @@
+<img
+  [src]="image"
+  alt=""
+  class="border border-2 border-secondary bg-white rounded-circle"
+  *ngIf="image; else defaultImage"
+  [width]="width"
+/>
+
+<ng-template #defaultImage>
+  <img [src]="defaultImgUrl" alt="" />
+</ng-template>
+
+<div></div>

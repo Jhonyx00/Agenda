@@ -1,13 +1,17 @@
 import { Component, OnInit } from '@angular/core';
-import { ContactsService } from '../../services/contacts.service';
+import { ContactsService } from '../../../contact-info/services/contacts.service';
+import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-sidebar',
-  templateUrl: './sidebar.component.html',
-  styleUrls: ['./sidebar.component.css'],
+  selector: 'app-contacts-list',
+  templateUrl: './contacts-list-container.component.html',
+  styleUrls: ['./contacts-list-container.component.css'],
 })
-export class SidebarComponent implements OnInit {
-  constructor(private contactsService: ContactsService) {}
+export class ContactsListContainerComponent implements OnInit {
+  constructor(
+    private contactsService: ContactsService,
+    private router: Router
+  ) {}
   ngOnInit(): void {
     this.initContacts();
   }
@@ -17,12 +21,12 @@ export class SidebarComponent implements OnInit {
   initContacts(): void {
     this.contactsService
       .getContacts({
-        offset: 1,
+        offset: 0,
         limit: 10,
         searchTerm: '',
       })
-      .subscribe(
-        (response) => {
+      .subscribe({
+        next: (response) => {
           if (response.succeed) {
             console.log('Datos: ', response);
             this.contacts = response.result.list;
@@ -31,10 +35,13 @@ export class SidebarComponent implements OnInit {
             console.log('No se pudieron cargar los datos', response.error);
           }
         },
-
-        (error) => {
+        error: (error) => {
           console.log('Error: ', error);
-        }
-      );
+        },
+      });
+  }
+
+  toCardContact() {
+    this.router.navigate(['contact-info']);
   }
 }
