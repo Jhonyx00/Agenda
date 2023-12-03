@@ -17,85 +17,102 @@
         </div>
 
         <div class="container-fluid m-auto contact-card-info">
-          <div class="row d-flex justify-content-center">
-            <span class="col-4 col-lg-2 p-1">Empresa</span>
+          <div class="row">
+            <div
+              class="col-4 col-lg-2 p-2 d-flex justify-content-end align-items-start"
+            >
+              <span class="text-break m-1"> Empresa</span>
+            </div>
 
             <div class="col-8 col-lg-10 d-flex flex-column flex-sm-row p-1">
-              <span class="p-1 rounded-3"> {{ contact.contactCompany }}</span>
+              <span class="p-1 rounded-3 m-1">
+                {{ contact.contactCompany }}</span
+              >
             </div>
           </div>
-          <div class="row d-flex justify-content-center">
-            <span class="col-4 col-lg-2 p-1">Correos</span>
+          <div class="row">
+            <div
+              class="col-4 col-lg-2 p-2 d-flex justify-content-end align-items-start"
+            >
+              <span class="text-break m-1"> Correos</span>
+            </div>
+
             <div class="col-8 col-lg-10 d-flex flex-column p-1">
               <span
-                class="p-1 rounded-3 text-break"
+                class="p-1 rounded-3 text-break m-1"
                 *ngFor="let email of contact.contactEmails; let i = index"
                 >{{ contact.contactEmails[i].emailValue }}</span
               >
             </div>
           </div>
 
-          <div class="row d-flex justify-content-center">
-            <span class="col-4 col-lg-2 p-1 text-break">Cumpleaños</span>
-
-            <div class="col-8 col-lg-10 d-flex flex-column flex-sm-row p-1">
-              <span class="p-1 rounded-3">{{ contact.contactBirthday }}</span>
-            </div>
-          </div>
-
-          <div class="row d-flex justify-content-center">
-            <span class="col-4 col-lg-2 p-1">Alias</span>
-            <div class="col-8 col-lg-10 d-flex flex-column flex-sm-row p-1">
-              <span class="p-1 rounded-3">{{ contact.contactAlias }}</span>
-            </div>
-          </div>
-
-          <div class="row d-flex justify-content-center">
-            <span class="col-4 col-lg-2 p-1">Notas</span>
-            <div class="col-8 col-lg-10 d-flex flex-column flex-sm-row p-1">
-              <span class="p-1 rounded-3 me-1">{{ contact.contactNotes }}</span>
-            </div>
-          </div>
-
-          <div class="row d-flex justify-content-center tags">
-            <span class="col-4 col-lg-2 p-1">
-              <img
-                src="../../../../../assets/images/tagIcon.svg"
-                width="20"
-                alt=""
-              />
-              Etiquetas</span
-            >
+          <div class="row">
             <div
-              class="col-8 col-lg-10 d-flex flex-column flex-sm-row p-1 flex-wrap bg-danger"
+              class="col-4 col-lg-2 p-2 d-flex justify-content-end align-items-start"
             >
+              <span class="text-break m-1"> Cumpleaños</span>
+            </div>
+
+            <div class="col-8 col-lg-10 d-flex flex-column flex-sm-row p-1">
+              <span class="p-1 rounded-3 m-1">{{
+                contact.contactBirthday
+              }}</span>
+            </div>
+          </div>
+
+          <div class="row">
+            <div
+              class="col-4 col-lg-2 p-2 d-flex justify-content-end align-items-start"
+            >
+              <span class="text-break m-1"> Alias</span>
+            </div>
+            <div class="col-8 col-lg-10 d-flex flex-column flex-sm-row p-1">
+              <span class="p-1 rounded-3 m-1">{{ contact.contactAlias }}</span>
+            </div>
+          </div>
+
+          <div class="row">
+            <div
+              class="col-4 col-lg-2 p-2 d-flex justify-content-end align-items-start"
+            >
+              <span class="text-break m-1"> Notas</span>
+            </div>
+            <div class="col-8 col-lg-10 d-flex flex-column flex-sm-row p-1">
+              <span class="p-1 rounded-3 m-1">{{ contact.contactNotes }}</span>
+            </div>
+          </div>
+
+          <div class="row tags">
+            <div
+              class="col-4 col-lg-2 p-2 d-flex justify-content-end align-items-start"
+            >
+              <span class="text-break m-1"> Etiquetas</span>
+            </div>
+            <div class="col-8 col-lg-10 d-flex flex-sm-row flex-wrap p-1">
               <span
                 *ngFor="let tag of contact.contactTags; let i = index"
-                class="p-1 rounded-3 me-sm-2 mb-sm-2"
+                class="p-1 rounded-3 m-1"
                 >{{ contact.contactTags[i].tagValue }}</span
               >
             </div>
           </div>
 
-          <div class="row d-flex justify-content-center">
-            <span class="col-4 col-lg-2 p-1">
-              <img
-                src="../../../../../assets/images/phoneIcon.svg"
-                width="20"
-                alt=""
-              />
-              Telefonos</span
+          <div class="row">
+            <div
+              class="col-4 col-lg-2 p-2 d-flex justify-content-end align-items-start"
             >
+              <span class="text-break m-1"> Telefonos</span>
+            </div>
 
             <div class="col-8 col-lg-10 d-flex flex-column p-1">
               <div
                 *ngFor="let phone of contact.contactPhones; let i = index"
                 class="d-flex flex-column flex-sm-row"
               >
-                <span class="p-1 rounded-3"
+                <span class="p-1"
                   >{{ contact.contactPhones[i].phoneValue }}
                 </span>
-                <span class="p-1 rounded-3 phone-type">{{
+                <span class="p-1 phone-type">{{
                   contact.contactPhones[i].phoneType
                 }}</span>
               </div>

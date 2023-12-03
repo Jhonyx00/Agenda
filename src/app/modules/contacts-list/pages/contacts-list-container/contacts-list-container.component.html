@@ -12,7 +12,7 @@
         <div class="list-group d-flex">
           <div
             class="list-group-item d-flex justify-content-between"
-            *ngFor="let item of contacts"
+            *ngFor="let item of contacts; let i = index"
             (click)="toCardContact(item)"
           >
             <div class="d-flex align-items-center w-100">
@@ -20,7 +20,9 @@
               <app-contact-image
                 [img]="{ url: item.contactPhoto, width: 50 }"
               ></app-contact-image>
-              <span class="px-2"> {{ item.contactFirstName }} </span>
+              <span class="px-2"
+                >{{ item.contactFirstName }} {{ item.contactLastName }}</span
+              >
             </div>
 
             <button class="btn btn-danger">✕</button>
