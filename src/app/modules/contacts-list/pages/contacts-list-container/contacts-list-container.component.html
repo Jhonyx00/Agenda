@@ -13,12 +13,12 @@
           <div
             class="list-group-item d-flex justify-content-between"
             *ngFor="let item of contacts"
-            (click)="toCardContact()"
+            (click)="toCardContact(item)"
           >
             <div class="d-flex align-items-center w-100">
               <!-- <app-contact-image [img]="item.contactPhoto"></app-contact-image> -->
               <app-contact-image
-                [img]="{ url: item.contactPhoto, width: 35 }"
+                [img]="{ url: item.contactPhoto, width: 50 }"
               ></app-contact-image>
               <span class="px-2"> {{ item.contactFirstName }} </span>
             </div>

@@ -5,53 +5,101 @@
     </div> -->
 
     <div class="col-12 col-sm-10 col-lg-8 p-2">
-      <div class="d-flex rounded-4 flex-column p-4 bg-white shadow">
+      <div class="d-flex rounded-4 flex-column p-2 p-sm-4 bg-white shadow">
         <div class="d-flex align-items-center flex-column flex-lg-row">
           <app-contact-image
-            style="
-              width: 8em;
-              height: 8em;
-              border: 2px solid gray;
-              border-radius: 50%;
-            "
-            [img]="contact[0].contactPhoto"
+            [img]="{ url: contact.contactPhoto, width: 150 }"
           ></app-contact-image>
 
-          <h3 class="text-center p-3">Jhonatan Reyes</h3>
+          <h3 class="text-center p-3">
+            {{ contact.contactFirstName }} {{ contact.contactLastName }}
+          </h3>
         </div>
 
-        <div class="container-fluid">
-          <div class="row d-flex justify-content-start">
-            <span class="col-4 col-lg-2">Empresa:</span>
-            <span class="col-6 col-sm-8 col-lg-10"> Ninguna</span>
+        <div class="container-fluid m-auto contact-card-info">
+          <div class="row d-flex justify-content-center">
+            <span class="col-4 col-lg-2 p-1">Empresa</span>
+
+            <div class="col-8 col-lg-10 d-flex flex-column flex-sm-row p-1">
+              <span class="p-1 rounded-3"> {{ contact.contactCompany }}</span>
+            </div>
           </div>
-          <div class="row d-flex justify-content-start">
-            <span class="col-4 col-lg-2"> Correos: </span
-            ><span class="col-6 col-sm-8 col-lg-10 text-break"
-              >jhonybrandonreyes@gmail.com</span
+          <div class="row d-flex justify-content-center">
+            <span class="col-4 col-lg-2 p-1">Correos</span>
+            <div class="col-8 col-lg-10 d-flex flex-column p-1">
+              <span
+                class="p-1 rounded-3 text-break"
+                *ngFor="let email of contact.contactEmails; let i = index"
+                >{{ contact.contactEmails[i].emailValue }}</span
+              >
+            </div>
+          </div>
+
+          <div class="row d-flex justify-content-center">
+            <span class="col-4 col-lg-2 p-1 text-break">Cumpleaños</span>
+
+            <div class="col-8 col-lg-10 d-flex flex-column flex-sm-row p-1">
+              <span class="p-1 rounded-3">{{ contact.contactBirthday }}</span>
+            </div>
+          </div>
+
+          <div class="row d-flex justify-content-center">
+            <span class="col-4 col-lg-2 p-1">Alias</span>
+            <div class="col-8 col-lg-10 d-flex flex-column flex-sm-row p-1">
+              <span class="p-1 rounded-3">{{ contact.contactAlias }}</span>
+            </div>
+          </div>
+
+          <div class="row d-flex justify-content-center">
+            <span class="col-4 col-lg-2 p-1">Notas</span>
+            <div class="col-8 col-lg-10 d-flex flex-column flex-sm-row p-1">
+              <span class="p-1 rounded-3 me-1">{{ contact.contactNotes }}</span>
+            </div>
+          </div>
+
+          <div class="row d-flex justify-content-center tags">
+            <span class="col-4 col-lg-2 p-1">
+              <img
+                src="../../../../../assets/images/tagIcon.svg"
+                width="20"
+                alt=""
+              />
+              Etiquetas</span
             >
+            <div
+              class="col-8 col-lg-10 d-flex flex-column flex-sm-row p-1 flex-wrap bg-danger"
+            >
+              <span
+                *ngFor="let tag of contact.contactTags; let i = index"
+                class="p-1 rounded-3 me-sm-2 mb-sm-2"
+                >{{ contact.contactTags[i].tagValue }}</span
+              >
+            </div>
           </div>
 
-          <div class="row d-flex justify-content-start">
-            <span class="col-4 col-lg-2">Cumpleaños: </span>
-            <span class="col-6 col-sm-8 col-lg-10">17 de mayo del 2000</span>
-          </div>
+          <div class="row d-flex justify-content-center">
+            <span class="col-4 col-lg-2 p-1">
+              <img
+                src="../../../../../assets/images/phoneIcon.svg"
+                width="20"
+                alt=""
+              />
+              Telefonos</span
+            >
 
-          <div class="row d-flex justify-content-start">
-            <span class="col-4 col-lg-2">Alias: </span>
-            <span class="col-6 col-sm-8 col-lg-10">El jhony</span>
-          </div>
-          <div class="row d-flex justify-content-start">
-            <span class="col-4 col-lg-2">Notas: </span
-            ><span class="col-6 col-sm-8 col-lg-10">Sin notas</span>
-          </div>
-          <div class="row d-flex justify-content-start">
-            <span class="col-4 col-lg-2">Etiquetas: </span
-            ><span class="col-6 col-sm-8 col-lg-10">Sin etiquetas</span>
-          </div>
-          <div class="row d-flex justify-content-start">
-            <span class="col-4 col-lg-2">Telefonos: </span
-            ><span class="col-6 col-sm-8 col-lg-10">4434484067</span>
+            <div class="col-8 col-lg-10 d-flex flex-column p-1">
+              <div
+                *ngFor="let phone of contact.contactPhones; let i = index"
+                class="d-flex flex-column flex-sm-row"
+              >
+                <span class="p-1 rounded-3"
+                  >{{ contact.contactPhones[i].phoneValue }}
+                </span>
+                <span class="p-1 rounded-3 phone-type">{{
+                  contact.contactPhones[i].phoneType
+                }}</span>
+              </div>
+            </div>
           </div>
         </div>
       </div>

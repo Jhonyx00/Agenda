@@ -41,7 +41,9 @@ export class ContactsListContainerComponent implements OnInit {
       });
   }
 
-  toCardContact() {
+  toCardContact(item: any) {
+    console.log('Contact id', item);
+    localStorage.setItem('contact', JSON.stringify(item));
     this.router.navigate(['contact-info']);
   }
 }
