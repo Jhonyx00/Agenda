@@ -1,15 +1,16 @@
 import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserInfoService {
   constructor() {}
+  private userSource = new BehaviorSubject<any>(null);
+  currentUser = this.userSource.asObservable();
 
-  getKey(key: string): string | null {
-    return localStorage.getItem(key);
-  }
-  setKey(key: string, value: string) {
-    localStorage.setItem(key, value);
+  changeUserData(data: any) {
+    sessionStorage.setItem('user', JSON.stringify(data));
+    this.userSource.next(data);
   }
 }

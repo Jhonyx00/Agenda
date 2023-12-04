@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { UserService } from 'src/app/modules/auth/services/user.service';
+import { UserInfoService } from 'src/app/shared/services/userInfo.service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -14,7 +15,8 @@ export class LoginComponent {
     private router: Router,
     private authService: AuthService,
     private _snackBar: MatSnackBar,
-    private userService: UserService
+    private userService: UserService,
+    private userInfoService: UserInfoService
   ) {}
 
   //
@@ -82,7 +84,7 @@ export class LoginComponent {
         if (response.succeed) {
           console.log('User: ', response);
           user = response.result.user;
-          sessionStorage.setItem('user', JSON.stringify(user));
+          this.userInfoService.changeUserData(user);
         }
       },
       error: (error) => {
