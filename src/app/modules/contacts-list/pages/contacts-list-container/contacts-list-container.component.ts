@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ContactsService } from '../../../contact-info/services/contacts.service';
 import { Router } from '@angular/router';
+import { DeleteContactService } from '../../services/deleteContact.service';
 
 @Component({
   selector: 'app-contacts-list',
@@ -10,7 +11,8 @@ import { Router } from '@angular/router';
 export class ContactsListContainerComponent implements OnInit {
   constructor(
     private contactsService: ContactsService,
-    private router: Router
+    private router: Router,
+    private deleteContactService: DeleteContactService
   ) {}
   ngOnInit(): void {
     this.initContacts();
@@ -50,5 +52,20 @@ export class ContactsListContainerComponent implements OnInit {
   toCardContact(item: any) {
     localStorage.setItem('contact', JSON.stringify(item));
     this.router.navigate(['contact-info']);
+  }
+
+  deleteContact(id: number) {
+    this.deleteContactService.deleteContact(id).subscribe({
+      next: (response) => {
+        if (response.succeed) {
+          console.log('usuario borrado: ', response);
+          console.log('id', id);
+          this.initContacts();
+        }
+      },
+      error: (error) => {
+        console.log('error de borrar usuario', error);
+      },
+    });
   }
 }
