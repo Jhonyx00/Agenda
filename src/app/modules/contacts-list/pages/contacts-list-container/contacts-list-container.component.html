@@ -4,45 +4,38 @@
       <div class="p-2">
         <button class="btn btn-primary">+ Nuevo contacto</button>
       </div>
-      <div class="d-flex rounded-4 flex-column shadow p-2 bg-white">
+      <div class="d-flex rounded-4 flex-column shadow p-2 p-lg-3 bg-white">
         <div class="bg-white p-2">Contactos: ({{ total }})</div>
 
         <div
-          class="d-flex contact-item rounded-end-4 rounded-start-4"
+          class="d-flex contact-item rounded-end-4 rounded-start-4 p-1 p-sm-2"
           *ngFor="let item of contacts; let i = index"
         >
           <!-- Contains 4 divs -->
 
-          <div
-            class="col-10 col-sm-11 d-flex p-2"
-            (click)="toCardContact(item)"
-          >
+          <div class="col-10 col-sm-11 d-flex" (click)="toCardContact(item)">
             <!--  -->
 
-            <div
-              class="d-flex align-items-center col-12 col-sm-6 col-md-5 col-lg-5"
-            >
+            <div class="d-flex align-items-center col-12 col-sm-6 col-md-5">
               <app-contact-image
                 [img]="{ url: item.contactPhoto, width: 50 }"
               ></app-contact-image>
-              <span class="px-2"
+              <span class="p-2 text-break"
                 >{{ item.contactFirstName }} {{ item.contactLastName }}</span
               >
             </div>
 
-            <div
-              class="d-none d-sm-flex align-items-center col-sm-6 col-md-4 col-lg-4"
-            >
-              <span class="px-2"
-                >{{ item.contactFirstName }} {{ item.contactLastName }}</span
-              >
+            <div class="d-none d-sm-flex align-items-center col-sm-6 col-md-4">
+              <span class="p-2 text-break" *ngIf="item.contactEmails.length > 0"
+                >{{ item.contactEmails[0].emailValue }}
+              </span>
             </div>
 
             <!-- phone -->
             <div class="d-none d-md-flex align-items-center col-md-3">
-              <span class="px-2"
-                >{{ item.contactFirstName }} {{ item.contactLastName }}</span
-              >
+              <span class="p-2 text-break" *ngIf="item.contactPhones.length > 0"
+                >{{ item.contactPhones[0].phoneValue }}
+              </span>
             </div>
           </div>
 
@@ -54,13 +47,12 @@
             <button class="btn btn-delete-contact">✕</button>
           </div>
         </div>
-
-        <app-paginator
-          [totalContacts]="total"
-          [currentPage]="currentPage"
-          (pageChange)="onPageChange($event)"
-        ></app-paginator>
       </div>
+      <app-paginator
+        [totalContacts]="total"
+        [currentPage]="currentPage"
+        (pageChange)="onPageChange($event)"
+      ></app-paginator>
     </div>
   </div>
 </div>
