@@ -1,4 +1,6 @@
-<nav class="navbar fixed-top position-sticky p-0 d-flex justify-content-start">
+<nav
+  class="navbar fixed-top position-sticky p-0 d-flex justify-content-start shadow"
+>
   <div class="d-flex justify-content-between flex-grow-1">
     <div class="nav-styles w-100 p-2">
       <button
@@ -30,28 +32,25 @@
         ></button>
       </div>
       <div class="offcanvas-body">
-        <ul
-          class="navbar-nav justify-content-end flex-grow-1 pe-3"
-          *ngIf="user"
-        >
-          <li class="nav-item p-2 border">
+        <ul class="navbar-nav pe-3" *ngIf="user">
+          <li class="nav-item p-2">
             <app-contact-image
               [img]="{ url: user.userPhoto, width: 120 }"
             ></app-contact-image>
           </li>
-          <li class="nav-item p-2 border">
+          <li class="nav-item p-2">
             <span> Nombre: {{ user.userFullName }} </span>
           </li>
-          <li class="nav-item p-2 border">
+          <li class="nav-item p-2">
             <span> Correo: {{ user.userEmail }} </span>
           </li>
-          <li class="nav-item p-2 border">
+          <li class="nav-item p-2">
             <span> Contactos</span>
           </li>
-          <li class="nav-item p-2 border">
+          <li class="nav-item p-2">
             <span> Acerca de</span>
           </li>
-          <li class="nav-item p-2 border">
+          <li class="nav-item p-2">
             <app-logout></app-logout>
           </li>
         </ul>

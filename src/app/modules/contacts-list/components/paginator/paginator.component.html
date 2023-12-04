@@ -1,0 +1,21 @@
+<div class="rounded-4 flex-column shadow bg-white mt-2">
+  <div class="d-flex justify-content-center p-3 align-items-center flex-row">
+    <button (click)="prevPage()" class="bg-white rounded-start-3 p-1">
+      Anterior
+    </button>
+
+    <div class="">
+      <button
+        (click)="setPage(page)"
+        *ngFor="let page of pages"
+        class="bg-white p-1"
+      >
+        {{ page }}
+      </button>
+    </div>
+
+    <button (click)="nextPage()" class="bg-white rounded-end-3 p-1">
+      Siguiente
+    </button>
+  </div>
+</div>

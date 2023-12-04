@@ -1,6 +1,19 @@
-ul {
-  list-style: none;
+div.contact-item,
+div.contact-item span {
+  transition: all 500ms ease;
 }
-ul li button {
+
+div.contact-item:hover {
+  cursor: pointer;
+  background-color: rgb(42, 110, 255);
+  > div span {
+    color: white;
+  }
+}
+
+button.btn-delete-contact {
+  color: white;
   font-weight: bold;
+  background-color: red;
+  transition: all ease 300ms;
 }

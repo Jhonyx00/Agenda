@@ -15,13 +15,19 @@ export class ContactsListContainerComponent implements OnInit {
   ngOnInit(): void {
     this.initContacts();
   }
-
+  onPageChange(pageNumber: number): void {
+    this.currentPage = pageNumber;
+    this.initContacts();
+  }
+  public currentPage = 1;
   public contacts = new Array();
   public total = 0;
+
   initContacts(): void {
+    const offset = (this.currentPage - 1) * 10;
     this.contactsService
       .getContacts({
-        offset: 0,
+        offset: offset,
         limit: 10,
         searchTerm: '',
       })
@@ -42,7 +48,6 @@ export class ContactsListContainerComponent implements OnInit {
   }
 
   toCardContact(item: any) {
-    console.log('Contact id', item);
     localStorage.setItem('contact', JSON.stringify(item));
     this.router.navigate(['contact-info']);
   }
