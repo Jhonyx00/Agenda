@@ -19,13 +19,14 @@ export class NavbarComponent implements OnInit {
   public initUserInfo() {
     this.userInfoService.currentUser.subscribe({
       next: (userData) => {
-        if (userData) {
-          this.user = userData;
-          this.userString = sessionStorage.getItem('user');
-          if (this.userString != null) {
-            this.user = JSON.parse(this.userString);
-          }
+        this.user = userData;
+        this.userString = sessionStorage.getItem('user');
+        if (this.userString != null) {
+          this.user = JSON.parse(this.userString);
         }
+      },
+      error: (error) => {
+        console.log('Hubo un problema con los datos del usuario', error);
       },
     });
   }

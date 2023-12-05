@@ -9,13 +9,19 @@ import { environment } from 'src/environments/environment';
 export class UserService {
   constructor(private http: HttpClient) {}
 
-  private url = environment.API_URL;
-  private urlUserInfo = this.url + 'users/profile/123';
-  headers = new HttpHeaders().set('X-API-Key', '7802c4c0');
+  private url = environment.apiUrl;
+  private userUrl = this.url + 'users/profile/123';
+  private apiKey = '7802c4c0';
 
-  getUserInfo(): Observable<any> {
-    return this.http.get(this.urlUserInfo, {
-      headers: this.headers.set('Authorization', 'Bearer ' + '12345678at'),
+  public getUserInfo(): Observable<any> {
+    const url = `${this.userUrl}?key=${this.apiKey}`;
+    const headers = new HttpHeaders({
+      Authorization: 'Bearer 12345678at',
     });
+
+    return this.http.get(url, { headers });
+    // return this.http.get(this.urlUserInfo, {
+    //   headers: this.headers.set('Authorization', 'Bearer ' + '12345678at'),
+    // });
   }
 }

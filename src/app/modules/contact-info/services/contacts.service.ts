@@ -8,13 +8,20 @@ import { environment } from 'src/environments/environment';
 })
 export class ContactsService {
   constructor(private http: HttpClient) {}
-  url = environment.API_URL;
-  headers = new HttpHeaders().set('X-API-Key', '7802c4c0');
-  urlContacts = this.url + 'contacts';
+  private url = environment.apiUrl;
+  // headers = new HttpHeaders().set('X-API-Key', '7802c4c0');
+  private urlContacts = this.url + 'contacts/';
+  private apiKey = '7802c4c0';
 
   getContacts(data: any): Observable<any> {
-    return this.http.put(this.urlContacts, data, {
-      headers: this.headers.set('Authorization', 'Bearer ' + '12345678at'),
+    const url = `${this.urlContacts}?key=${this.apiKey}`;
+    const headers = new HttpHeaders({
+      Authorization: 'Bearer 12345678at',
     });
+
+    return this.http.put(url, data, { headers });
+    // return this.http.put(this.urlContacts, data, {
+    //   headers: this.headers.set('Authorization', 'Bearer ' + '12345678at'),
+    // });
   }
 }

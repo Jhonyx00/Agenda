@@ -7,13 +7,14 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root',
 })
 export class DeleteContactService {
-  private apiUrl = 'https://my.api.mockaroo.com/sa/exercise/contacts/delete/';
-  private apiKey = '7802c4c0';
+  private url = environment.apiUrl;
+  private deleteUserUrl = this.url + 'contacts/delete/';
+  private apiKey = environment.apiKey;
 
   constructor(private http: HttpClient) {}
 
   deleteContact(contactId: number): Observable<any> {
-    const url = `${this.apiUrl}${contactId}?key=${this.apiKey}`;
+    const url = `${this.deleteUserUrl}${contactId}?key=${this.apiKey}`;
     const headers = new HttpHeaders({
       Authorization: 'Bearer 12345678at',
     });
