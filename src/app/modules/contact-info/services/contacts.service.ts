@@ -8,8 +8,8 @@ import { environment } from 'src/environments/environment';
 })
 export class ContactsService {
   constructor(private http: HttpClient) {}
+
   private url = environment.apiUrl;
-  // headers = new HttpHeaders().set('X-API-Key', '7802c4c0');
   private urlContacts = this.url + 'contacts/';
   private apiKey = '7802c4c0';
 
@@ -20,8 +20,5 @@ export class ContactsService {
     });
 
     return this.http.put(url, data, { headers });
-    // return this.http.put(this.urlContacts, data, {
-    //   headers: this.headers.set('Authorization', 'Bearer ' + '12345678at'),
-    // });
   }
 }

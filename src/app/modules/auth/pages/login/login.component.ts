@@ -19,10 +19,8 @@ export class LoginComponent {
     private userInfoService: UserInfoService
   ) {}
 
-  //
   userControl: string = 'authUser';
   passwordControl: string = 'authPassword';
-  //
 
   formLogin = new FormGroup({
     authUser: new FormControl('', [
@@ -88,7 +86,7 @@ export class LoginComponent {
         }
       },
       error: (error) => {
-        console.log('Error', error);
+        console.log('Error:', error);
       },
     });
   }

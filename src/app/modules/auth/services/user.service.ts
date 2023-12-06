@@ -20,8 +20,5 @@ export class UserService {
     });
 
     return this.http.get(url, { headers });
-    // return this.http.get(this.urlUserInfo, {
-    //   headers: this.headers.set('Authorization', 'Bearer ' + '12345678at'),
-    // });
   }
 }

@@ -49,7 +49,7 @@ export class ContactsListContainerComponent implements OnInit {
       });
   }
 
-  toCardContact(item: any) {
+  toCardContactPage(item: any) {
     localStorage.setItem('contact', JSON.stringify(item));
     this.router.navigate(['contact-info']);
   }

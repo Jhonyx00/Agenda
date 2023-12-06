@@ -1,6 +1,8 @@
 <div class="container-fluid">
   <div class="row d-flex justify-content-center">
-    <div class="col-12 col-sm-10 col-lg-8 p-2">
+    <div class="col-12 col-sm-10 p-2">
+      <h3 class="p-2 title-header">Lista de contactos</h3>
+
       <div class="p-2">
         <button class="btn btn-primary">+ Nuevo contacto</button>
       </div>
@@ -11,11 +13,10 @@
           class="d-flex contact-item rounded-end-4 rounded-start-4 p-1 p-sm-2"
           *ngFor="let item of contacts; let i = index"
         >
-          <!-- Contains 4 divs -->
-
-          <div class="col-10 col-sm-11 d-flex" (click)="toCardContact(item)">
-            <!--  -->
-
+          <div
+            class="col-10 col-sm-11 d-flex"
+            (click)="toCardContactPage(item)"
+          >
             <div class="d-flex align-items-center col-12 col-sm-6 col-md-5">
               <app-contact-image
                 [img]="{ url: item.contactPhoto, width: 50 }"
@@ -26,20 +27,32 @@
             </div>
 
             <div class="d-none d-sm-flex align-items-center col-sm-6 col-md-4">
-              <span class="p-2 text-break" *ngIf="item.contactEmails.length > 0"
+              <span
+                class="p-2 text-break"
+                *ngIf="item.contactEmails.length > 0; else noEmail"
                 >{{ item.contactEmails[0].emailValue }}
               </span>
+              <ng-template #noEmail>
+                <span class="p-2 text-break noItemFind"
+                  >Sin Email
+                </span></ng-template
+              >
             </div>
 
-            <!-- phone -->
             <div class="d-none d-md-flex align-items-center col-md-3">
-              <span class="p-2 text-break" *ngIf="item.contactPhones.length > 0"
+              <span
+                class="p-2 text-break"
+                *ngIf="item.contactPhones.length > 0; else noPhone"
                 >{{ item.contactPhones[0].phoneValue }}
               </span>
+
+              <ng-template #noPhone>
+                <span class="p-2 text-break noItemFind"
+                  >Sin teléfono
+                </span></ng-template
+              >
             </div>
           </div>
-
-          <!--  -->
 
           <div
             class="col-2 col-sm-1 d-flex justify-content-center align-items-center"
@@ -61,3 +74,4 @@
     </div>
   </div>
 </div>
+<app-add-contact></app-add-contact>

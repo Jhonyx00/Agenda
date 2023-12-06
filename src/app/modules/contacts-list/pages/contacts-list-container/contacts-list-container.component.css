@@ -17,3 +17,11 @@ button.btn-delete-contact {
   background-color: red;
   transition: all ease 300ms;
 }
+
+.title-header {
+  color: rgb(141, 141, 141);
+}
+
+.noItemFind {
+  color: rgb(218, 218, 218);
+}

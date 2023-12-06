@@ -12,21 +12,18 @@ export class LogoutComponent {
   onLogout(): void {
     let close = confirm('¿Seguro que deseas scerrar sesión?');
     if (close) {
-      this.authService.logout().subscribe(
-        (response) => {
+      this.authService.logout().subscribe({
+        next: (response) => {
           if (response.succeed) {
-            console.log('logaut', response);
-            localStorage.removeItem('accessToken');
-            localStorage.removeItem('refreshToken');
             this.router.navigate(['auth']);
           } else {
-            console.log('error: ', response.error);
+            console.log('Error: ', response.error);
           }
         },
-        (error) => {
-          console.log('errorsillo', error);
-        }
-      );
+        error: (error) => {
+          console.log('Error', error);
+        },
+      });
     }
   }
 }
