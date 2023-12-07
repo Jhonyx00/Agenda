@@ -19,6 +19,7 @@ export class NavbarComponent implements OnInit {
   } = { defaulOptions: [] };
 
   ngOnInit(): void {
+    this.initUserInfo();
     this.mainMenu.defaulOptions = [
       {
         name: 'home',
@@ -36,18 +37,18 @@ export class NavbarComponent implements OnInit {
         router: ['/', 'about'],
       },
     ];
-    this.initUserInfo();
   }
 
-  // goTo($event: any) {
-  //   const route = $event.target.textContent;
+  goTo($event: any) {
+    const route = $event.target.textContent;
+    console.log(route);
 
-  //   if (route == 'about') {
-  //     this.router.navigate(['/', 'about']);
-  //   } else if (route == 'contacts') {
-  //     this.router.navigate(['/', 'contacts-list']);
-  //   }
-  // }
+    if (route == ' about ') {
+      this.router.navigate(['/', 'about']);
+    } else if (route == ' contacts ') {
+      this.router.navigate(['/', 'contacts-list']);
+    }
+  }
 
   private userString: string | null = null;
   public user!: User;
