@@ -14,6 +14,8 @@ export class ContactsListContainerComponent implements OnInit {
     private router: Router,
     private deleteContactService: DeleteContactService
   ) {}
+
+  public counter: number = 0;
   ngOnInit(): void {
     this.initContacts();
   }
@@ -54,12 +56,14 @@ export class ContactsListContainerComponent implements OnInit {
     this.router.navigate(['contact-info']);
   }
 
-  deleteContact(id: number) {
+  deleteContact(id: number): void {
     this.deleteContactService.deleteContact(id).subscribe({
       next: (response) => {
         if (response.succeed) {
           console.log('usuario borrado: ', response);
-          console.log('id', id);
+          this.counter += 1;
+          console.log('Borrados: ', this.counter);
+
           this.initContacts();
         }
       },
