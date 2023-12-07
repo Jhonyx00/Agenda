@@ -6,3 +6,7 @@
 .icon-button {
   box-shadow: none;
 }
+
+* {
+  border: 1px solid red;
+}

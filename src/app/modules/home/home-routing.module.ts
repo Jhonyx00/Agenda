@@ -17,6 +17,11 @@ const routes: Routes = [
       ),
   },
   {
+    path: 'about',
+    loadChildren: () =>
+      import('../about/about-page.module').then((m) => m.AboutPageModule),
+  },
+  {
     path: '**',
     redirectTo: 'contacts-list',
   },
