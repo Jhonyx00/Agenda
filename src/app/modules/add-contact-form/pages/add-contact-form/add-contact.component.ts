@@ -6,6 +6,7 @@ import {
 } from '@angular/core';
 import { DynamicHostDirective } from 'src/app/shared/directives/dynamic-host.directive';
 import { DynamicPhoneComponent } from '../../../contacts-list/components/dynamic-phone/dynamic-phone.component';
+import { AddContactService } from '../../services/add-contact.service';
 
 @Component({
   selector: 'app-add-contact',
@@ -13,6 +14,8 @@ import { DynamicPhoneComponent } from '../../../contacts-list/components/dynamic
   styleUrls: ['./add-contact.component.css'],
 })
 export class AddContactFormComponent {
+  constructor(private addContactService: AddContactService) {}
+
   @ViewChild(DynamicHostDirective, { read: ViewContainerRef })
   public dynamicHost!: ViewContainerRef;
   private componentRef!: ComponentRef<DynamicPhoneComponent>;
@@ -31,4 +34,8 @@ export class AddContactFormComponent {
       this.componentRef.destroy();
     }
   }
+
+  //
+
+  public addContact(): void {}
 }
