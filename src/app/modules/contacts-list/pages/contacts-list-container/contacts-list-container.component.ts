@@ -51,9 +51,13 @@ export class ContactsListContainerComponent implements OnInit {
       });
   }
 
-  toCardContactPage(item: any) {
+  toCardContactPage(item: Object): void {
     localStorage.setItem('contact', JSON.stringify(item));
     this.router.navigate(['contact-info']);
+  }
+
+  toAddContactPage(): void {
+    this.router.navigate(['add-contact']);
   }
 
   deleteContact(id: number): void {

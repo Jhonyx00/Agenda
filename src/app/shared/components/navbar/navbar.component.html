@@ -2,7 +2,7 @@
   class="navbar fixed-top position-sticky p-0 d-flex justify-content-start shadow"
 >
   <div class="d-flex justify-content-between flex-grow-1">
-    <div class="nav-styles w-100 p-2">
+    <div class="nav-styles container-fluid">
       <button
         class="navbar-toggler icon-button"
         type="button"
@@ -13,7 +13,7 @@
       >
         <span class="navbar-toggler-icon"></span>
       </button>
-      <a class="navbar-brand px-2">Contacts App</a>
+      <h1 class="navbar-brand d-inline-block">Contacts App</h1>
     </div>
 
     <div
@@ -26,37 +26,43 @@
         <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Menú</h5>
         <button
           type="button"
-          class="btn-close"
+          class="btn-close bg-body-secondary"
           data-bs-dismiss="offcanvas"
           aria-label="Close"
         ></button>
       </div>
       <div class="offcanvas-body">
-        <ul class="navbar-nav pe-3" *ngIf="user">
+        <ul class="navbar-nav h-100" *ngIf="user">
           <li class="nav-item p-2">
             <app-contact-image
               [img]="{ url: user.userPhoto, width: 120 }"
             ></app-contact-image>
           </li>
-          <li class="nav-item p-2">
-            <span> Nombre: {{ user.userFullName }} </span>
+          <li class="nav-item p-1">
+            <span class=""> Nombre: {{ user.userFullName }} </span>
           </li>
-          <li class="nav-item p-2">
-            <span> Correo: {{ user.userEmail }} </span>
+          <li class="nav-item p-1">
+            <span class=""> Correo: {{ user.userEmail }} </span>
           </li>
-          <li class="nav-item p-2">
-            <button>Contactos</button>
+          <hr size="10px" />
+          <li class="nav-item">
+            <button
+              (click)="toContactsListPage()"
+              class="btn rounded-0 w-100 text-start bg-body-secondary"
+            >
+              Contactos
+            </button>
           </li>
-          <li class="nav-item p-2">
-            <span> Acerca de</span>
-          </li>
-          <li *ngFor="let item of mainMenu.defaulOptions" class="nav-item p-2">
-            <button (click)="goTo($event)">
-              {{ item.name }}
+          <li class="nav-item">
+            <button
+              (click)="toAboutPage()"
+              class="btn rounded-0 w-100 text-start bg-body-secondary"
+            >
+              Acerca de
             </button>
           </li>
 
-          <li class="nav-item p-2">
+          <li class="nav-item mt-auto">
             <app-logout></app-logout>
           </li>
         </ul>

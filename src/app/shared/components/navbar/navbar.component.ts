@@ -20,35 +20,43 @@ export class NavbarComponent implements OnInit {
 
   ngOnInit(): void {
     this.initUserInfo();
-    this.mainMenu.defaulOptions = [
-      {
-        name: 'home',
-        icon: '',
-        router: ['/', 'auth'],
-      },
-      {
-        name: 'contacts',
-        icon: '',
-        router: ['/', 'contacts-list'],
-      },
-      {
-        name: 'about',
-        icon: '',
-        router: ['/', 'about'],
-      },
-    ];
+    // this.mainMenu.defaulOptions = [
+    //   {
+    //     name: 'home',
+    //     icon: '',
+    //     router: ['/', 'auth'],
+    //   },
+    //   {
+    //     name: 'contacts',
+    //     icon: '',
+    //     router: ['/', 'contacts-list'],
+    //   },
+    //   {
+    //     name: 'about',
+    //     icon: '',
+    //     router: ['/', 'about'],
+    //   },
+    // ];
   }
 
-  goTo($event: any) {
-    const route = $event.target.textContent;
-    console.log(route);
-
-    if (route == ' about ') {
-      this.router.navigate(['/', 'about']);
-    } else if (route == ' contacts ') {
-      this.router.navigate(['/', 'contacts-list']);
-    }
+  toAboutPage() {
+    this.router.navigate(['/', 'about']);
   }
+
+  toContactsListPage() {
+    this.router.navigate(['/', 'contacts-list']);
+  }
+
+  // goTo($event: any) {
+  //   const route = $event.target.textContent;
+  //   console.log(route);
+
+  //   if (route == ' about ') {
+  //     this.router.navigate(['/', 'about']);
+  //   } else if (route == ' contacts ') {
+  //     this.router.navigate(['/', 'contacts-list']);
+  //   }
+  // }
 
   private userString: string | null = null;
   public user!: User;

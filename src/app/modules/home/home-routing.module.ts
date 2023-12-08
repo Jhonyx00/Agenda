@@ -17,6 +17,14 @@ const routes: Routes = [
       ),
   },
   {
+    path: 'add-contact',
+    loadChildren: () =>
+      import('../add-contact-form/add-contact-form.module').then(
+        (m) => m.AddContactFormModule
+      ),
+  },
+
+  {
     path: 'about',
     loadChildren: () =>
       import('../about/about-page.module').then((m) => m.AboutPageModule),

@@ -5,14 +5,14 @@ import {
   ComponentRef,
 } from '@angular/core';
 import { DynamicHostDirective } from 'src/app/shared/directives/dynamic-host.directive';
-import { DynamicPhoneComponent } from '../../components/dynamic-phone/dynamic-phone.component';
+import { DynamicPhoneComponent } from '../../../contacts-list/components/dynamic-phone/dynamic-phone.component';
 
 @Component({
   selector: 'app-add-contact',
   templateUrl: './add-contact.component.html',
   styleUrls: ['./add-contact.component.css'],
 })
-export class AddContactComponent {
+export class AddContactFormComponent {
   @ViewChild(DynamicHostDirective, { read: ViewContainerRef })
   public dynamicHost!: ViewContainerRef;
   private componentRef!: ComponentRef<DynamicPhoneComponent>;
