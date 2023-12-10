@@ -5,7 +5,7 @@ import {
   ComponentRef,
 } from '@angular/core';
 import { DynamicHostDirective } from 'src/app/shared/directives/dynamic-host.directive';
-import { DynamicPhoneComponent } from '../../../contacts-list/components/dynamic-phone/dynamic-phone.component';
+import { DynamicPhoneComponent } from '../../../../shared/components/dynamic-phone/dynamic-phone.component';
 import { AddContactService } from '../../services/add-contact.service';
 
 @Component({

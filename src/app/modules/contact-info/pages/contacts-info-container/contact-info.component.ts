@@ -1,4 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  Component,
+  ComponentRef,
+  OnInit,
+  ViewChild,
+  ViewContainerRef,
+} from '@angular/core';
+import { DynamicPhoneComponent } from 'src/app/shared/components/dynamic-phone/dynamic-phone.component';
+import { DynamicHostDirective } from 'src/app/shared/directives/dynamic-host.directive';
 
 @Component({
   selector: 'app-contact-info',
@@ -10,6 +18,12 @@ export class ContactInfoContainerComponent implements OnInit {
     this.displayContactInfo();
   }
 
+  @ViewChild(DynamicHostDirective, { read: ViewContainerRef })
+  public dynamicHost!: ViewContainerRef;
+  private componentRef!: ComponentRef<DynamicPhoneComponent>;
+
+  public phoneIndex!: number;
+
   private userString: string | null = null;
   public contact: any;
 
@@ -20,4 +34,20 @@ export class ContactInfoContainerComponent implements OnInit {
       console.log(this.contact);
     }
   }
+
+  //
+
+  public createComponent(): void {
+    this.componentRef = this.dynamicHost.createComponent(DynamicPhoneComponent);
+    const componentIndex = this.dynamicHost.indexOf(this.componentRef.hostView);
+    (this.componentRef.instance as DynamicPhoneComponent).phoneIndex =
+      componentIndex + 2;
+  }
+
+  public deleteComponent(): void {
+    if (this.componentRef) {
+      this.componentRef.destroy();
+    }
+  }
+  //
 }

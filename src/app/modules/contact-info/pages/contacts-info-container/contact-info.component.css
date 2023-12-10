@@ -32,3 +32,13 @@ span:not(.contact-card-info > div > span, .phone-type) {
 .phone-type {
   color: rgb(142, 142, 142);
 }
+
+input[type="text"],
+input[type="tel"],
+input[type="email"] {
+  border: none;
+}
+
+/* input[type="text"]:focus {
+  background-color: rgb(237, 237, 237);
+} */

@@ -1,9 +1,5 @@
 <div class="container-fluid">
   <div class="row d-flex justify-content-center">
-    <!-- <div class="col-12 col-sm-4 col-lg-3 p-0 bg-white vh-100">
-      <app-contacts-list></app-contacts-list>
-    </div> -->
-
     <div class="col-12 col-sm-10 col-lg-8 p-2">
       <div class="d-flex rounded-4 flex-column p-2 p-sm-4 bg-white shadow">
         <div class="d-flex align-items-center flex-column flex-lg-row">
@@ -25,9 +21,11 @@
             </div>
 
             <div class="col-8 col-lg-10 d-flex flex-column flex-sm-row p-1">
-              <span class="p-1 rounded-3 m-1">
-                {{ contact.contactCompany }}</span
-              >
+              <input
+                type="text"
+                class="p-1 rounded-3"
+                value="{{ contact.contactCompany }}"
+              />
             </div>
           </div>
           <div class="row">
@@ -38,11 +36,12 @@
             </div>
 
             <div class="col-8 col-lg-10 d-flex flex-column p-1">
-              <span
-                class="p-1 rounded-3 text-break m-1"
+              <input
+                type="email"
+                class="p-1 rounded-3 text-break"
                 *ngFor="let email of contact.contactEmails; let i = index"
-                >{{ contact.contactEmails[i].emailValue }}</span
-              >
+                value="{{ contact.contactEmails[i].emailValue }}"
+              />
             </div>
           </div>
 
@@ -54,9 +53,11 @@
             </div>
 
             <div class="col-8 col-lg-10 d-flex flex-column flex-sm-row p-1">
-              <span class="p-1 rounded-3 m-1">{{
-                contact.contactBirthday
-              }}</span>
+              <input
+                type="text"
+                class="p-1 rounded-3"
+                value="{{ contact.contactBirthday }}"
+              />
             </div>
           </div>
 
@@ -67,7 +68,11 @@
               <span class="text-break m-1"> Alias</span>
             </div>
             <div class="col-8 col-lg-10 d-flex flex-column flex-sm-row p-1">
-              <span class="p-1 rounded-3 m-1">{{ contact.contactAlias }}</span>
+              <input
+                type="text"
+                class="p-1 rounded-3"
+                value="{{ contact.contactAlias }}"
+              />
             </div>
           </div>
 
@@ -78,7 +83,11 @@
               <span class="text-break m-1"> Notas</span>
             </div>
             <div class="col-8 col-lg-10 d-flex flex-column flex-sm-row p-1">
-              <span class="p-1 rounded-3 m-1">{{ contact.contactNotes }}</span>
+              <input
+                type="text"
+                class="p-1 rounded-3"
+                value="{{ contact.contactNotes }}"
+              />
             </div>
           </div>
 
@@ -105,16 +114,28 @@
             </div>
 
             <div class="col-8 col-lg-10 d-flex flex-column p-1">
-              <div
-                *ngFor="let phone of contact.contactPhones; let i = index"
-                class="d-flex flex-column flex-sm-row"
-              >
-                <span class="p-1 m-1"
-                  >{{ contact.contactPhones[i].phoneValue }}
-                </span>
-                <span class="p-1 m-1 phone-type">{{
-                  contact.contactPhones[i].phoneType
-                }}</span>
+              <div class="container">
+                <div
+                  *ngFor="let phone of contact.contactPhones; let i = index"
+                  class="row flex-column flex-lg-row"
+                >
+                  <span class="p-1 m-1 phone-type col-6 col-md-4 col-lg-2">{{
+                    contact.contactPhones[i].phoneType
+                  }}</span>
+                  <input
+                    type="tel"
+                    class="p-1 m-1 col-6 col-md-4"
+                    value="{{ contact.contactPhones[i].phoneValue }}"
+                  />
+                </div>
+                <ng-template dynamicPhoneInput></ng-template>
+                <input
+                  type="button"
+                  name=""
+                  id=""
+                  value="Agregar telefono"
+                  (click)="createComponent()"
+                />
               </div>
             </div>
           </div>
