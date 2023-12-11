@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ContactsService } from '../../../contact-info/services/contacts.service';
+import { ContactsService } from '../../services/contacts.service';
 import { Router } from '@angular/router';
 import { DeleteContactService } from '../../services/deleteContact.service';
 
@@ -67,7 +67,6 @@ export class ContactsListContainerComponent implements OnInit {
           console.log('usuario borrado: ', response);
           this.counter += 1;
           console.log('Borrados: ', this.counter);
-
           this.initContacts();
         }
       },

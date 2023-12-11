@@ -17,6 +17,7 @@ import { Phone } from 'src/app/core/interfaces/phone';
 import { Tag } from 'src/app/core/interfaces/tag';
 import { DynamicPhoneComponent } from 'src/app/shared/components/dynamic-phone/dynamic-phone.component';
 import { DynamicHostDirective } from 'src/app/shared/directives/dynamic-host.directive';
+import { UpdateContactService } from '../../services/update-contact.service';
 
 @Component({
   selector: 'app-contact-info',
@@ -44,8 +45,12 @@ export class ContactInfoContainerComponent implements OnInit {
   tagsArray: any;
 
   size = 10;
-  constructor(private formBuilder: FormBuilder) {
+  constructor(
+    private formBuilder: FormBuilder,
+    private updateContactService: UpdateContactService
+  ) {
     this.editContactForm = this.formBuilder.group({
+      contactId: new FormControl(''),
       contactPhoto: new FormControl('', [Validators.required]),
       contactFirstName: new FormControl('', [Validators.required]),
       contactLastName: new FormControl('', [Validators.required]),
@@ -69,6 +74,7 @@ export class ContactInfoContainerComponent implements OnInit {
 
   initForm() {
     this.editContactForm.patchValue({
+      contactId: this.contact.contactId,
       contactPhoto: this.contact.contactPhoto,
       contactCompany: this.contact.contactCompany,
       contactFirstName: this.contact.contactFirstName,
@@ -155,5 +161,24 @@ export class ContactInfoContainerComponent implements OnInit {
     if (this.componentRef) {
       this.componentRef.destroy();
     }
+  }
+
+  public updateContactInfo() {
+    const contactData = this.editContactForm.value;
+
+    console.log('Formulario con datos para actualizar:', contactData);
+
+    this.updateContactService.updateContact(contactData).subscribe({
+      next: (response) => {
+        if (response.succeed) {
+          console.log('Actualización exitosa: ', response);
+        } else {
+          console.log('No se pudieron cargar los datos', response.error);
+        }
+      },
+      error: (error) => {
+        console.log('Error: ', error);
+      },
+    });
   }
 }
