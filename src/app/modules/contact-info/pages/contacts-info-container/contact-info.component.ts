@@ -50,7 +50,6 @@ export class ContactInfoContainerComponent implements OnInit {
     private updateContactService: UpdateContactService
   ) {
     this.editContactForm = this.formBuilder.group({
-      contactId: new FormControl(''),
       contactPhoto: new FormControl('', [Validators.required]),
       contactFirstName: new FormControl('', [Validators.required]),
       contactLastName: new FormControl('', [Validators.required]),
@@ -74,7 +73,6 @@ export class ContactInfoContainerComponent implements OnInit {
 
   initForm() {
     this.editContactForm.patchValue({
-      contactId: this.contact.contactId,
       contactPhoto: this.contact.contactPhoto,
       contactCompany: this.contact.contactCompany,
       contactFirstName: this.contact.contactFirstName,
@@ -165,10 +163,10 @@ export class ContactInfoContainerComponent implements OnInit {
 
   public updateContactInfo() {
     const contactData = this.editContactForm.value;
-
+    const contactId = this.contact.contactId;
     console.log('Formulario con datos para actualizar:', contactData);
 
-    this.updateContactService.updateContact(contactData).subscribe({
+    this.updateContactService.updateContact(contactData, contactId).subscribe({
       next: (response) => {
         if (response.succeed) {
           console.log('Actualización exitosa: ', response);

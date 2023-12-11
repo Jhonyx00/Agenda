@@ -13,12 +13,15 @@ export class UpdateContactService {
   private urlContactUpdate = this.url + 'contacts/update/';
   private apiKey = '7802c4c0';
 
-  updateContact(data: any): Observable<any> {
-    const url = `${this.urlContactUpdate}${data}?key=${this.apiKey}`;
+  updateContact(data: any, contactId: number): Observable<any> {
+    const url = `${this.urlContactUpdate}${contactId}?key=${this.apiKey}`;
     const headers = new HttpHeaders({
       Authorization: 'Bearer 12345678at',
     });
 
+    if (!data.contactFirstName) {
+      console.log('faltan campos');
+    }
     return this.http.put(url, data, { headers });
   }
 }
