@@ -1,119 +1,210 @@
 <div class="container-fluid">
   <div class="row d-flex justify-content-center">
-    <div class="col-12 col-sm-10 col-lg-8 p-2">
-      <div class="d-flex rounded-4 flex-column p-2 p-sm-4 bg-white shadow">
-        <div class="d-flex align-items-center flex-column flex-lg-row">
-          <app-contact-image
-            [img]="{ url: contact.contactPhoto, width: 130 }"
-          ></app-contact-image>
+    <div class="col-12 col-sm-10 col-lg-8 p-4">
+      <form
+        [formGroup]="editContactForm"
+        class="row rounded-5 flex-column p-2 p-sm-4 bg-white shadow"
+      >
+        <div
+          class="container-fluid align-items-center flex-column rounded-5 p-md-3"
+        >
+          <div class="row row-cols-auto justify-content-center flex-row-lg p-2">
+            <app-contact-image
+              [img]="{ url: contact.contactPhoto, width: 130 }"
+            ></app-contact-image>
 
-          <h3 class="text-center p-3">
-            {{ contact.contactFirstName }} {{ contact.contactLastName }}
-          </h3>
+            <div
+              class="col-12 col-md-6 col-lg-9 d-flex justify-content-center justify-content-lg-start"
+            >
+              <input
+                type="text"
+                [formControlName]="contactFirstName"
+                class="fs-3 align-self-center m-1 rounded-3 border text-end text-md-start col-6 col-lg-5"
+              />
+              <input
+                type="text"
+                [formControlName]="contactLastName"
+                class="fs-3 align-self-center m-1 rounded-3 border col-6 col-lg-5"
+              />
+            </div>
+          </div>
         </div>
 
         <div class="container-fluid m-auto contact-card-info">
           <div class="row">
             <div
-              class="col-4 col-lg-2 p-2 d-flex justify-content-end align-items-start"
+              class="col-4 col-lg-3 p-2 d-flex justify-content-end align-items-start"
             >
               <span class="text-break m-1"> Empresa</span>
             </div>
 
-            <div class="col-8 col-lg-10 d-flex flex-column flex-sm-row p-1">
+            <div class="col-8 col-lg-9 d-flex flex-column flex-sm-row p-1">
               <input
                 type="text"
-                class="p-1 rounded-3"
-                value="{{ contact.contactCompany }}"
+                [formControlName]="contactCompany"
+                class="p-1 rounded-3 border"
               />
             </div>
           </div>
+
           <div class="row">
             <div
-              class="col-4 col-lg-2 p-2 d-flex justify-content-end align-items-start"
+              class="col-4 col-lg-3 p-2 d-flex justify-content-end align-items-start"
             >
               <span class="text-break m-1"> Correos</span>
             </div>
 
-            <div class="col-8 col-lg-10 d-flex flex-column p-1">
-              <input
-                type="email"
-                class="p-1 rounded-3 text-break"
-                *ngFor="let email of contact.contactEmails; let i = index"
-                value="{{ contact.contactEmails[i].emailValue }}"
-              />
+            <!--  -->
+            <div class="col-8 col-lg-9 d-flex flex-column p-1">
+              <div class="container" formArrayName="contactEmails">
+                <div
+                  *ngFor="
+                    let emailControl of contactEmailsFormArray.controls;
+                    let i = index
+                  "
+                  class="row flex-column flex-lg-row"
+                >
+                  <input
+                    type="text"
+                    [formControlName]="i"
+                    placeholder="Correo electrónico"
+                    class="p-1 my-1 rounded-3 border"
+                  />
+                </div>
+              </div>
             </div>
+            <!--  -->
           </div>
 
           <div class="row">
             <div
-              class="col-4 col-lg-2 p-2 d-flex justify-content-end align-items-start"
+              class="col-4 col-lg-3 p-2 d-flex justify-content-end align-items-start"
             >
               <span class="text-break m-1"> Cumpleaños</span>
             </div>
 
-            <div class="col-8 col-lg-10 d-flex flex-column flex-sm-row p-1">
+            <div class="col-8 col-lg-9 d-flex flex-column flex-sm-row p-1">
               <input
                 type="text"
-                class="p-1 rounded-3"
-                value="{{ contact.contactBirthday }}"
+                [formControlName]="contactBirthday"
+                class="p-1 rounded-3 border"
               />
             </div>
           </div>
 
           <div class="row">
             <div
-              class="col-4 col-lg-2 p-2 d-flex justify-content-end align-items-start"
+              class="col-4 col-lg-3 p-2 d-flex justify-content-end align-items-start"
             >
               <span class="text-break m-1"> Alias</span>
             </div>
-            <div class="col-8 col-lg-10 d-flex flex-column flex-sm-row p-1">
+            <div class="col-8 col-lg-9 d-flex flex-column flex-sm-row p-1">
               <input
                 type="text"
-                class="p-1 rounded-3"
-                value="{{ contact.contactAlias }}"
+                [formControlName]="contactAlias"
+                class="p-1 rounded-3 border"
               />
             </div>
           </div>
 
           <div class="row">
             <div
-              class="col-4 col-lg-2 p-2 d-flex justify-content-end align-items-start"
+              class="col-4 col-lg-3 p-2 d-flex justify-content-end align-items-start"
             >
               <span class="text-break m-1"> Notas</span>
             </div>
-            <div class="col-8 col-lg-10 d-flex flex-column flex-sm-row p-1">
-              <input
-                type="text"
-                class="p-1 rounded-3"
-                value="{{ contact.contactNotes }}"
-              />
+
+            <div class="col-8 col-lg-9 d-flex flex-column p-1">
+              <div class="container">
+                <div class="row flex-column flex-lg-row">
+                  <input
+                    type="text"
+                    [formControlName]="contactNotes"
+                    placeholder="Notas"
+                    class="p-1 rounded-3 border"
+                  />
+                </div>
+              </div>
             </div>
           </div>
 
           <div class="row tags">
             <div
-              class="col-4 col-lg-2 p-2 d-flex justify-content-end align-items-start"
+              class="col-4 col-lg-3 p-2 d-flex justify-content-end align-items-start"
             >
               <span class="text-break m-1"> Etiquetas</span>
             </div>
-            <div class="col-8 col-lg-10 d-flex flex-sm-row flex-wrap p-1">
-              <span
-                *ngFor="let tag of contact.contactTags; let i = index"
-                class="p-1 rounded-3 m-1"
-                >{{ contact.contactTags[i].tagValue }}</span
-              >
+
+            <div class="col-8 col-lg-9 d-flex flex-column p-0">
+              <div class="container" formArrayName="contactTags">
+                <div class="row flex-row">
+                  <input
+                    *ngFor="
+                      let tagsControl of contactTagsFormArray.controls;
+                      let i = index
+                    "
+                    type="text"
+                    [formControlName]="i"
+                    placeholder="Etiquetas"
+                    class="p-1 m-1 rounded-3 text-center border"
+                    [style.width]="tagsControl.value.length * 12 + 'px'"
+                  />
+                </div>
+              </div>
             </div>
           </div>
 
           <div class="row">
             <div
-              class="col-4 col-lg-2 p-2 d-flex justify-content-end align-items-start"
+              class="col-4 col-lg-3 p-2 d-flex justify-content-end align-items-start"
             >
               <span class="text-break m-1"> Telefonos</span>
             </div>
 
-            <div class="col-8 col-lg-10 d-flex flex-column p-1">
+            <div class="col-8 col-lg-9 d-flex flex-column p-1">
+              <div class="container" formArrayName="contactPhones">
+                <div
+                  *ngFor="
+                    let phoneControl of contactPhonesFormArray.controls;
+                    let i = index
+                  "
+                  class="row flex-column flex-sm-row align-content-center"
+                >
+                  <input
+                    type="text"
+                    [formControlName]="i"
+                    placeholder="Teléfono"
+                    class="p-1 my-1 border rounded-3 col-12 col-sm-5 col-md-4 col-lg-3 col-xxl-2"
+                  />
+
+                  <p
+                    class="my-1 p-1 phone-type col-12 col-sm-7 col-md-8 col-lg-9 col-xxl-10"
+                  >
+                    <img
+                      src="../../../../../assets/images/whatsappIcon.svg"
+                      alt=""
+                      width="21"
+                      *ngIf="contact.contactPhones[i].phoneType == 'whatsapp'"
+                    />
+                    <img
+                      src="../../../../../assets/images/phoneIcon.svg"
+                      alt=""
+                      width="21"
+                      *ngIf="contact.contactPhones[i].phoneType == 'phone'"
+                    />
+                    <img
+                      src="../../../../../assets/images/smartphoneIcon.svg"
+                      alt=""
+                      width="21"
+                      *ngIf="contact.contactPhones[i].phoneType == 'mobile'"
+                    />
+                    {{ contact.contactPhones[i].phoneType }}
+                  </p>
+                </div>
+              </div>
+            </div>
+            <!--  -->
+            <!-- <div class="col-8 col-lg-10 d-flex flex-column p-1">
               <div class="container">
                 <div
                   *ngFor="let phone of contact.contactPhones; let i = index"
@@ -137,10 +228,10 @@
                   (click)="createComponent()"
                 />
               </div>
-            </div>
+            </div> -->
           </div>
         </div>
-      </div>
+      </form>
     </div>
   </div>
 </div>

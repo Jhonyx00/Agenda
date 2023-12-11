@@ -2,21 +2,13 @@
   backdrop-filter: blur(1em);
 }
 
-.tags div:nth-child(2) span {
+.tags div:nth-child(2) input {
   background-color: rgb(111, 140, 255);
   color: white !important;
 }
 
 span {
   line-height: normal;
-}
-/* 
-.contact-card-info > div {
-  border-bottom: 2px solid rgb(215, 215, 215);
-} */
-
-.row > div:nth-child(2) {
-  border-bottom: 3px solid rgb(227, 227, 227);
 }
 
 .contact-card-info > div > div:first-child > span {
@@ -30,15 +22,13 @@ span:not(.contact-card-info > div > span, .phone-type) {
 }
 
 .phone-type {
-  color: rgb(142, 142, 142);
+  color: rgb(184, 184, 184);
 }
 
-input[type="text"],
-input[type="tel"],
-input[type="email"] {
-  border: none;
-}
+input:focus {
+  outline: none;
+  background-color: rgb(219, 219, 219);
+  /* outline: 1px solid dodgerblue; */
 
-/* input[type="text"]:focus {
-  background-color: rgb(237, 237, 237);
-} */
+  /* box-shadow: 0px 0px 5px 5px rgba(210, 210, 210, 0.3); */
+}
