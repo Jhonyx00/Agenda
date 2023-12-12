@@ -102,14 +102,16 @@ export class ContactInfoContainerComponent implements OnInit {
     this.phonesArray = this.editContactForm.get('contactPhones') as FormArray;
     this.phonesArray.clear();
     this.contact.contactPhones.map((phone: Phone) => {
-      this.phonesArray.push(
-        new FormControl(phone.phoneValue, [
-          Validators.required,
-          Validators.minLength(10),
-        ])
-      );
+      const phoneFormGroup = new FormGroup({
+        phoneId: new FormControl(phone.phoneId, Validators.required),
+        phoneValue: new FormControl(phone.phoneValue, Validators.required),
+        phoneType: new FormControl(phone.phoneType, Validators.required),
+      });
+      this.phonesArray.push(phoneFormGroup);
     });
     //
+
+    console.log('CONTROLES', this.contactPhonesFormArray.controls[0]);
 
     //TAGS
     this.tagsArray = this.editContactForm.get('contactTags') as FormArray;
@@ -167,23 +169,25 @@ export class ContactInfoContainerComponent implements OnInit {
 
   public componentRefs: ComponentRef<DynamicPhoneComponent>[] = [];
 
-  public createComponent(phoneControl: FormControl): void {
+  public createComponent(phoneControl: FormGroup): void {
     this.componentRef = this.dynamicHost.createComponent(DynamicPhoneComponent);
 
     // esto es lo que dijo Serna en la reunión del 11 de diciembre de 2023
     // a las 12:45pm aproximadamente
 
-    this.componentRef.instance.phoneControl = phoneControl;
+    this.componentRef.instance.phoneGroup = phoneControl;
     this.componentRefs.push(this.componentRef);
   }
 
   public addNewPhone(): void {
-    const phoneControl = new FormControl('', [
-      Validators.required,
-      Validators.minLength(10),
-    ]);
-    this.contactPhonesFormArray.push(phoneControl);
-    this.createComponent(phoneControl);
+    const phoneFormGroup = new FormGroup({
+      phoneId: new FormControl('', Validators.required),
+      phoneValue: new FormControl('', Validators.required),
+      phoneType: new FormControl('', Validators.required),
+    });
+
+    this.contactPhonesFormArray.push(phoneFormGroup);
+    this.createComponent(phoneFormGroup);
   }
 
   public deleteComponent(index: number): void {
