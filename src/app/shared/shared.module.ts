@@ -4,6 +4,8 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { LogoutComponent } from './components/logout/logout.component';
 import { ContactImageComponent } from './components/contact-image/contact-image.component';
 import { DynamicHostDirective } from './directives/dynamic-host.directive';
+import { ReactiveFormsModule } from '@angular/forms';
+import { DynamicPhoneComponent } from './components/dynamic-phone/dynamic-phone.component';
 
 @NgModule({
   declarations: [
@@ -11,8 +13,9 @@ import { DynamicHostDirective } from './directives/dynamic-host.directive';
     LogoutComponent,
     ContactImageComponent,
     DynamicHostDirective,
+    DynamicPhoneComponent,
   ],
-  imports: [CommonModule],
+  imports: [CommonModule, ReactiveFormsModule],
   exports: [
     NavbarComponent,
     LogoutComponent,

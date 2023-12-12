@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-dynamic-phone',
@@ -7,5 +8,8 @@ import { Component } from '@angular/core';
 })
 export class DynamicPhoneComponent {
   phoneIndex!: number;
+
+  @Input() phoneControl!: FormControl;
+  @Input() phoneGroup!: FormGroup;
   constructor() {}
 }

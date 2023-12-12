@@ -1,8 +1,16 @@
-<label for="inputPhone" class="form-label">teléfono {{ phoneIndex }}</label>
-<input
-  type="text"
-  class="form-control"
-  name="phone"
-  autocomplete="tel"
-  aria-describedby="phoneHelp"
-/>
+<div class="dynamic-phone-container">
+  <input
+    type="text"
+    [formControl]="phoneControl"
+    placeholder="Ingresa el número de teléfono"
+  />
+
+  <!-- <div
+    *ngIf="phoneControl.invalid && (phoneControl.dirty || phoneControl.touched)"
+  >
+    <p *ngIf="phoneControl.errors?.required">El teléfono es requerido.</p>
+    <p *ngIf="phoneControl.errors?.minlength">
+      El teléfono debe tener al menos 10 dígitos.
+    </p>
+  </div> -->
+</div>

@@ -139,28 +139,6 @@ export class ContactInfoContainerComponent implements OnInit {
     this.displayContactInfo();
     this.initForm();
   }
-
-  @ViewChild(DynamicHostDirective, { read: ViewContainerRef })
-  public dynamicHost!: ViewContainerRef;
-  private componentRef!: ComponentRef<DynamicPhoneComponent>;
-
-  public phoneIndex!: number;
-  private userString: string | null = null;
-  public contact: any;
-
-  public createComponent(): void {
-    this.componentRef = this.dynamicHost.createComponent(DynamicPhoneComponent);
-    const componentIndex = this.dynamicHost.indexOf(this.componentRef.hostView);
-    (this.componentRef.instance as DynamicPhoneComponent).phoneIndex =
-      componentIndex + 2;
-  }
-
-  public deleteComponent(): void {
-    if (this.componentRef) {
-      this.componentRef.destroy();
-    }
-  }
-
   public updateContactInfo() {
     const contactData = this.editContactForm.value;
     const contactId = this.contact.contactId;
@@ -178,5 +156,44 @@ export class ContactInfoContainerComponent implements OnInit {
         console.log('Error: ', error);
       },
     });
+  }
+  @ViewChild(DynamicHostDirective, { read: ViewContainerRef })
+  public dynamicHost!: ViewContainerRef;
+  private componentRef!: ComponentRef<DynamicPhoneComponent>;
+
+  public phoneIndex!: number;
+  private userString: string | null = null;
+  public contact: any;
+
+  public componentRefs: ComponentRef<DynamicPhoneComponent>[] = [];
+
+  public createComponent(phoneControl: FormControl): void {
+    this.componentRef = this.dynamicHost.createComponent(DynamicPhoneComponent);
+
+    // esto es lo que dijo Serna en la reunión del 11 de diciembre de 2023
+    // a las 12:45pm aproximadamente
+
+    this.componentRef.instance.phoneControl = phoneControl;
+    this.componentRefs.push(this.componentRef);
+  }
+
+  public addNewPhone(): void {
+    const phoneControl = new FormControl('', [
+      Validators.required,
+      Validators.minLength(10),
+    ]);
+    this.contactPhonesFormArray.push(phoneControl);
+    this.createComponent(phoneControl);
+  }
+
+  public deleteComponent(index: number): void {
+    // Elimina el control del FormArray
+    this.contactPhonesFormArray.removeAt(index);
+    //
+
+    if (this.componentRefs[index]) {
+      this.componentRefs[index].destroy();
+      this.componentRefs.splice(index, 1);
+    }
   }
 }
