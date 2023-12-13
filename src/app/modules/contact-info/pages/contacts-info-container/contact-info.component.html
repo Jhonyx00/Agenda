@@ -172,6 +172,7 @@
                     let i = index
                   "
                   [formGroupName]="i"
+                  class="row flex-row"
                 >
                   <input
                     type="text"
@@ -179,13 +180,36 @@
                     placeholder="Teléfono"
                     class="p-1 my-1 border rounded-3 col-12 col-sm-5 col-md-4 col-lg-3 col-xxl-2"
                   />
+                  <p
+                    class="my-1 p-1 phone-type col-12 col-sm-7 col-md-8 col-lg-9 col-xxl-10"
+                  >
+                    <img
+                      src="../../../../../assets/images/whatsappIcon.svg"
+                      alt=""
+                      width="21"
+                      *ngIf="contact.contactPhones[i].phoneType == 'whatsapp'"
+                    />
+                    <img
+                      src="../../../../../assets/images/phoneIcon.svg"
+                      alt=""
+                      width="21"
+                      *ngIf="contact.contactPhones[i].phoneType == 'phone'"
+                    />
+                    <img
+                      src="../../../../../assets/images/smartphoneIcon.svg"
+                      alt=""
+                      width="21"
+                      *ngIf="contact.contactPhones[i].phoneType == 'mobile'"
+                    />
+                    {{ contact.contactPhones[i].phoneType }}
+                  </p>
                 </div>
 
                 <ng-template dynamicPhoneInput></ng-template>
                 <button
                   type="button"
                   name=""
-                  class="btn bg-danger"
+                  class="btn bg-danger btn-sm"
                   id=""
                   (click)="deleteComponent(0)"
                 >
@@ -195,7 +219,7 @@
                 <input
                   type="button"
                   name=""
-                  class="btn border"
+                  class="btn btn-info btn-sm"
                   id=""
                   value="Agregar telefono"
                   (click)="addNewPhone()"

@@ -1,16 +1,17 @@
-import { Component, OnDestroy } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Component } from '@angular/core';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { UserService } from 'src/app/modules/auth/services/user.service';
 import { UserInfoService } from 'src/app/shared/services/userInfo.service';
+import { UserService } from '../../services/user.service';
+
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css'],
+  selector: 'app-register',
+  templateUrl: './register.component.html',
+  styleUrls: ['./register.component.css'],
 })
-export class LoginComponent {
+export class RegisterComponent {
   constructor(
     private router: Router,
     private authService: AuthService,
@@ -18,6 +19,9 @@ export class LoginComponent {
     private userService: UserService,
     private userInfoService: UserInfoService
   ) {}
+  toLoginPage() {
+    this.router.navigate(['auth/login']);
+  }
 
   userControl: string = 'authUser';
   passwordControl: string = 'authPassword';
@@ -33,32 +37,9 @@ export class LoginComponent {
   onSubmit(): void {
     const userData = this.formLogin.value;
     if (this.formLogin.valid) {
-      this.authService.login(userData).subscribe({
+      this.authService.register(userData).subscribe({
         next: (response) => {
-          if (response.succeed) {
-            console.log('datos: ', response);
-            this._snackBar.open('¡Bienvenido!', 'Aceptar', {
-              duration: 3000,
-              panelClass: ['green-snackbar'],
-            });
-
-            localStorage.setItem('accessToken', response.result.accessToken);
-            localStorage.setItem('refreshToken', response.result.refreshToken);
-
-            this.setUserInfo();
-
-            this.router.navigate(['home/contacts']);
-          } else {
-            console.log('Inicio de sesión fallido:', response.message);
-            this._snackBar.open(
-              'Inicio de sesión fallido, usuario o contraseña incorrectos',
-              'Aceptar',
-              {
-                duration: 3000,
-                panelClass: ['red-snackbar'],
-              }
-            );
-          }
+          console.log(response);
         },
         error: (error) => {
           console.log(error);
@@ -89,9 +70,5 @@ export class LoginComponent {
         console.log('Error:', error);
       },
     });
-  }
-
-  toRegisterPage() {
-    this.router.navigate(['auth/register']);
   }
 }

@@ -85,7 +85,7 @@ export class ContactInfoContainerComponent implements OnInit {
     this.userString = localStorage.getItem('contact');
     if (this.userString != null) {
       this.contact = JSON.parse(this.userString);
-      console.log(this.contact);
+      console.log('Contact info:', this.contact);
     }
   }
 
