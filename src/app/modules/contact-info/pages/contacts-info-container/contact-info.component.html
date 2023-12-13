@@ -164,12 +164,13 @@
 
             <div class="col-8 col-lg-9 d-flex flex-column p-1">
               <div class="container" formArrayName="contactPhones">
+                <!--  -->
+
                 <div
                   *ngFor="
-                    let phoneControl of contactPhonesFormArray.controls;
+                    let formGroup of contactPhonesFormArray.controls;
                     let i = index
                   "
-                  class="row flex-column flex-sm-row align-content-center"
                 >
                   <input
                     type="text"
@@ -177,33 +178,9 @@
                     placeholder="Teléfono"
                     class="p-1 my-1 border rounded-3 col-12 col-sm-5 col-md-4 col-lg-3 col-xxl-2"
                   />
-
-                  <!-- <p
-                    class="my-1 p-1 phone-type col-12 col-sm-7 col-md-8 col-lg-9 col-xxl-10"
-                  >
-                    <img
-                      src="../../../../../assets/images/whatsappIcon.svg"
-                      alt=""
-                      width="21"
-                      *ngIf="contact.contactPhones[i].phoneType == 'whatsapp'"
-                    />
-                    <img
-                      src="../../../../../assets/images/phoneIcon.svg"
-                      alt=""
-                      width="21"
-                      *ngIf="contact.contactPhones[i].phoneType == 'phone'"
-                    />
-                    <img
-                      src="../../../../../assets/images/smartphoneIcon.svg"
-                      alt=""
-                      width="21"
-                      *ngIf="contact.contactPhones[i].phoneType == 'mobile'"
-                    />
-                    {{ contact.contactPhones[i].phoneType }}
-                  </p> -->
                 </div>
 
-                <!--  -->
+                <ng-template dynamicPhoneInput></ng-template>
                 <button
                   type="button"
                   name=""
@@ -213,8 +190,6 @@
                 >
                   ✕
                 </button>
-
-                <ng-template dynamicPhoneInput></ng-template>
 
                 <input
                   type="button"

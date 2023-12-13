@@ -44,6 +44,9 @@ export class ContactInfoContainerComponent implements OnInit {
   phonesArray: any;
   tagsArray: any;
 
+  arreglo: any = [];
+
+  counter: number = 0;
   size = 10;
   constructor(
     private formBuilder: FormBuilder,
@@ -140,6 +143,11 @@ export class ContactInfoContainerComponent implements OnInit {
     this.initForm();
   }
   public updateContactInfo() {
+    for (let i = 0; i < this.counter; i++) {
+      this.contactPhonesFormArray.push(this.arreglo[i]);
+      this.deleteAllComponents();
+    }
+
     const contactData = this.editContactForm.value;
     const contactId = this.contact.contactId;
     console.log('Formulario con datos para actualizar:', contactData);
@@ -182,8 +190,22 @@ export class ContactInfoContainerComponent implements OnInit {
       Validators.required,
       Validators.minLength(10),
     ]);
-    this.contactPhonesFormArray.push(phoneControl);
-    this.createComponent(phoneControl);
+
+    this.arreglo.push(phoneControl);
+
+    //counter+=1
+    // this.contactPhonesFormArray.push(phoneControl);
+
+    if (this.componentRefs) {
+      this.createComponent(phoneControl);
+      this.counter += 1;
+    }
+  }
+
+  public deleteAllComponents() {
+    this.componentRefs.forEach((component) => {
+      component.destroy();
+    });
   }
 
   public deleteComponent(index: number): void {
