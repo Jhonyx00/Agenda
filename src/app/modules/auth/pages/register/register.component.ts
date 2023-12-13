@@ -23,37 +23,48 @@ export class RegisterComponent {
     this.router.navigate(['auth/login']);
   }
 
-  userControl: string = 'authUser';
-  passwordControl: string = 'authPassword';
+  userControl: string = 'userName';
+  passwordControl: string = 'userPassword';
+  emailControl: string = 'userEmail';
 
   formLogin = new FormGroup({
-    authUser: new FormControl('', [
+    userName: new FormControl('', [
       Validators.minLength(2),
       Validators.required,
     ]),
-    authPassword: new FormControl('', [Validators.required]),
+    userEmail: new FormControl('', [Validators.required]),
+    userPassword: new FormControl('', [Validators.required]),
   });
 
   onSubmit(): void {
     const userData = this.formLogin.value;
-    if (this.formLogin.valid) {
-      this.authService.register(userData).subscribe({
-        next: (response) => {
-          console.log(response);
-        },
-        error: (error) => {
-          console.log(error);
-          this._snackBar.open(
-            'Error en la comunicación con el servidor, intentelo más tarde',
-            'Aceptar',
-            {
-              duration: 3000,
-              panelClass: ['red-snackbar'],
-            }
-          );
-        },
-      });
-    }
+    // if (this.formLogin.valid) {
+    this.authService.register(userData).subscribe({
+      next: (response) => {
+        if (response.succeed) {
+          console.log('datos: ', response);
+          this._snackBar.open('¡Bienvenido!', 'Aceptar', {
+            duration: 3000,
+            panelClass: ['green-snackbar'],
+          });
+
+          this.setUserInfo();
+          this.router.navigate(['home/contacts']);
+        }
+      },
+      error: (error) => {
+        console.log(error);
+        this._snackBar.open(
+          'Error en la comunicación con el servidor, intentelo más tarde',
+          'Aceptar',
+          {
+            duration: 3000,
+            panelClass: ['red-snackbar'],
+          }
+        );
+      },
+    });
+    // }
   }
 
   setUserInfo() {
