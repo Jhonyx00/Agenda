@@ -105,12 +105,13 @@ export class ContactInfoContainerComponent implements OnInit {
     this.phonesArray = this.editContactForm.get('contactPhones') as FormArray;
     this.phonesArray.clear();
     this.contact.contactPhones.map((phone: Phone) => {
-      this.phonesArray.push(
-        new FormControl(phone.phoneValue, [
-          Validators.required,
-          Validators.minLength(10),
-        ])
-      );
+      const phoneFormGroup = new FormGroup({
+        phoneId: new FormControl(phone.phoneId, Validators.required),
+        phoneValue: new FormControl(phone.phoneValue, Validators.required),
+        phoneType: new FormControl(phone.phoneType, Validators.required),
+      });
+
+      this.phonesArray.push(phoneFormGroup);
     });
     //
 

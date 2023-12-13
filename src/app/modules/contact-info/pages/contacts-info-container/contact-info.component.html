@@ -168,13 +168,14 @@
 
                 <div
                   *ngFor="
-                    let formGroup of contactPhonesFormArray.controls;
+                    let phone of contactPhonesFormArray.controls;
                     let i = index
                   "
+                  [formGroupName]="i"
                 >
                   <input
                     type="text"
-                    [formControlName]="i"
+                    formControlName="phoneValue"
                     placeholder="Teléfono"
                     class="p-1 my-1 border rounded-3 col-12 col-sm-5 col-md-4 col-lg-3 col-xxl-2"
                   />
