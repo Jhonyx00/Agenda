@@ -175,7 +175,7 @@
                 >
                   <input
                     type="text"
-                    formControlName="phoneValue"
+                    [formControlName]="phoneValue"
                     placeholder="Teléfono"
                     class="p-1 my-1 border rounded-3 col-12 col-sm-5 col-md-4 col-lg-3 col-xxl-2"
                   />
@@ -187,7 +187,7 @@
                   name=""
                   class="btn bg-danger"
                   id=""
-                  (click)="deleteComponent(contactPhonesFormArray.length - 1)"
+                  (click)="deleteComponent(0)"
                 >
                   ✕
                 </button>

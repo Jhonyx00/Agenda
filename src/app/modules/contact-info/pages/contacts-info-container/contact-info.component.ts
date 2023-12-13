@@ -25,6 +25,7 @@ import { UpdateContactService } from '../../services/update-contact.service';
   styleUrls: ['./contact-info.component.css'],
 })
 export class ContactInfoContainerComponent implements OnInit {
+  //form control names
   contactPhoto: string = 'contactPhoto';
   contactFirstName: string = 'contactFirstName';
   contactLastName: string = 'contactLastName';
@@ -35,19 +36,28 @@ export class ContactInfoContainerComponent implements OnInit {
   contactNotes: string = 'contactNotes';
   contactTags: string = 'contactTags';
   contactPhones: string = 'contactPhones';
+  phoneValue: string = 'phoneValue';
 
+  //form group
   editContactForm!: FormGroup;
 
-  //dinamic components array
-
+  //form arrays
   emailsArray: any;
   phonesArray: any;
   tagsArray: any;
 
-  arreglo: any = [];
+  //dynamic components related
+  @ViewChild(DynamicHostDirective, { read: ViewContainerRef })
+  public dynamicHost!: ViewContainerRef;
+  private componentRef!: ComponentRef<DynamicPhoneComponent>;
+  public phoneIndex: number = 0;
+  public componentReference: ComponentRef<DynamicPhoneComponent>[] = [];
+  auxPhoneArray: any = [];
 
-  counter: number = 0;
-  size = 10;
+  //user data from local storage
+  public contact: any;
+  private userString: string | null = null;
+
   constructor(
     private formBuilder: FormBuilder,
     private updateContactService: UpdateContactService
@@ -66,6 +76,11 @@ export class ContactInfoContainerComponent implements OnInit {
     });
   }
 
+  ngOnInit(): void {
+    this.displayContactInfo();
+    this.setFormData();
+  }
+
   public displayContactInfo() {
     this.userString = localStorage.getItem('contact');
     if (this.userString != null) {
@@ -74,7 +89,7 @@ export class ContactInfoContainerComponent implements OnInit {
     }
   }
 
-  initForm() {
+  setFormData() {
     this.editContactForm.patchValue({
       contactPhoto: this.contact.contactPhoto,
       contactCompany: this.contact.contactCompany,
@@ -124,34 +139,90 @@ export class ContactInfoContainerComponent implements OnInit {
     //
   }
 
-  //returns EMAIL list as a form array
+  //getters for form arrays
+
+  //returns EMAILS as a form array
   get contactEmailsFormArray(): FormArray {
     return this.editContactForm.get('contactEmails') as FormArray;
   }
 
-  //returns PHONE list as a form array
+  //returns PHONES as a form array
   get contactPhonesFormArray(): FormArray {
     return this.editContactForm.get('contactPhones') as FormArray;
   }
 
-  //returns TAG list as a form array
+  //returns TAGS as a form array
   get contactTagsFormArray(): FormArray {
     return this.editContactForm.get('contactTags') as FormArray;
   }
 
-  ngOnInit(): void {
-    this.displayContactInfo();
-    this.initForm();
+  public createComponent(
+    phoneGroup: FormGroup,
+    phoneControl: FormControl
+  ): void {
+    this.componentRef = this.dynamicHost.createComponent(DynamicPhoneComponent);
+    this.componentRef.instance.phoneGroup = phoneGroup;
+    this.componentRef.instance.phoneControl = phoneControl;
+    this.componentReference.push(this.componentRef);
+    this.phoneIndex = this.componentReference.length;
   }
-  public updateContactInfo() {
-    for (let i = 0; i < this.counter; i++) {
-      this.contactPhonesFormArray.push(this.arreglo[i]);
-      this.deleteAllComponents();
+
+  //dynamic component functions
+  public addNewPhone(): void {
+    const phoneFormGroup = new FormGroup({
+      phoneId: new FormControl('', Validators.required),
+      phoneValue: new FormControl('', Validators.required),
+      phoneType: new FormControl('', Validators.required),
+    });
+
+    const phone = phoneFormGroup.controls.phoneValue;
+    this.auxPhoneArray.push(phoneFormGroup);
+
+    if (this.componentReference) {
+      this.createComponent(phoneFormGroup, phone);
     }
+  }
+
+  public deleteAllComponents() {
+    this.componentReference.forEach((component) => {
+      component.destroy();
+    });
+  }
+
+  public deleteComponent(index: number): void {
+    this.contactPhonesFormArray.removeAt(index);
+    if (this.componentReference[index]) {
+      this.componentReference[index].destroy();
+      this.componentReference.splice(index, 1);
+    }
+  }
+
+  validateInputInsertion() {
+    if (this.auxPhoneArray.length > 0) {
+      for (let i = 0; i < this.phoneIndex; i++) {
+        this.contactPhonesFormArray.push(this.auxPhoneArray[i]);
+      }
+    } else {
+      alert('No has modificado los datos');
+    }
+  }
+
+  resetValues() {
+    this.auxPhoneArray = [];
+    this.componentReference = [];
+  }
+
+  //Update contact info
+  public updateContactInfo() {
+    this.validateInputInsertion();
+    this.deleteAllComponents();
 
     const contactData = this.editContactForm.value;
     const contactId = this.contact.contactId;
-    console.log('Formulario con datos para actualizar:', contactData);
+
+    this.resetValues();
+
+    console.log('Formulario con datos actualizados:', contactData);
 
     this.updateContactService.updateContact(contactData, contactId).subscribe({
       next: (response) => {
@@ -165,65 +236,5 @@ export class ContactInfoContainerComponent implements OnInit {
         console.log('Error: ', error);
       },
     });
-  }
-  @ViewChild(DynamicHostDirective, { read: ViewContainerRef })
-  public dynamicHost!: ViewContainerRef;
-  private componentRef!: ComponentRef<DynamicPhoneComponent>;
-
-  public phoneIndex!: number;
-  private userString: string | null = null;
-  public contact: any;
-
-  public componentRefs: ComponentRef<DynamicPhoneComponent>[] = [];
-
-  public createComponent(
-    phoneGroup: FormGroup,
-    phoneControl: FormControl
-  ): void {
-    this.componentRef = this.dynamicHost.createComponent(DynamicPhoneComponent);
-
-    // esto es lo que dijo Serna en la reunión del 11 de diciembre de 2023
-    // a las 12:45pm aproximadamente
-
-    this.componentRef.instance.phoneGroup = phoneGroup;
-    this.componentRef.instance.phoneControl = phoneControl;
-    this.componentRefs.push(this.componentRef);
-  }
-
-  public addNewPhone(): void {
-    const phoneFormGroup = new FormGroup({
-      phoneId: new FormControl('', Validators.required),
-      phoneValue: new FormControl('', Validators.required),
-      phoneType: new FormControl('', Validators.required),
-    });
-
-    const phone = phoneFormGroup.controls.phoneValue;
-
-    this.arreglo.push(phoneFormGroup);
-
-    //counter+=1
-    // this.contactPhonesFormArray.push(phoneControl);
-
-    if (this.componentRefs) {
-      this.createComponent(phoneFormGroup, phone);
-      this.counter += 1;
-    }
-  }
-
-  public deleteAllComponents() {
-    this.componentRefs.forEach((component) => {
-      component.destroy();
-    });
-  }
-
-  public deleteComponent(index: number): void {
-    // Elimina el control del FormArray
-    this.contactPhonesFormArray.removeAt(index);
-    //
-
-    if (this.componentRefs[index]) {
-      this.componentRefs[index].destroy();
-      this.componentRefs.splice(index, 1);
-    }
   }
 }
