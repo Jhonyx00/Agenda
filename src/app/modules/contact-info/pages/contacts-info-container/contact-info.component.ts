@@ -175,29 +175,36 @@ export class ContactInfoContainerComponent implements OnInit {
 
   public componentRefs: ComponentRef<DynamicPhoneComponent>[] = [];
 
-  public createComponent(phoneControl: FormControl): void {
+  public createComponent(
+    phoneGroup: FormGroup,
+    phoneControl: FormControl
+  ): void {
     this.componentRef = this.dynamicHost.createComponent(DynamicPhoneComponent);
 
     // esto es lo que dijo Serna en la reunión del 11 de diciembre de 2023
     // a las 12:45pm aproximadamente
 
+    this.componentRef.instance.phoneGroup = phoneGroup;
     this.componentRef.instance.phoneControl = phoneControl;
     this.componentRefs.push(this.componentRef);
   }
 
   public addNewPhone(): void {
-    const phoneControl = new FormControl('', [
-      Validators.required,
-      Validators.minLength(10),
-    ]);
+    const phoneFormGroup = new FormGroup({
+      phoneId: new FormControl('', Validators.required),
+      phoneValue: new FormControl('', Validators.required),
+      phoneType: new FormControl('', Validators.required),
+    });
 
-    this.arreglo.push(phoneControl);
+    const phone = phoneFormGroup.controls.phoneValue;
+
+    this.arreglo.push(phoneFormGroup);
 
     //counter+=1
     // this.contactPhonesFormArray.push(phoneControl);
 
     if (this.componentRefs) {
-      this.createComponent(phoneControl);
+      this.createComponent(phoneFormGroup, phone);
       this.counter += 1;
     }
   }
