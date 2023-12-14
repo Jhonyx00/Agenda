@@ -13,21 +13,11 @@ export class AuthService {
   private loginUrl = this.url + 'auth/login';
   private logoutUrl = this.url + 'auth/logout';
 
-  private registerUrl = this.url + 'users/create';
   private apiKey = '7802c4c0';
 
   public login(data: any): Observable<any> {
     const url = `${this.loginUrl}?key=${this.apiKey}`;
     return this.http.put(url, data);
-  }
-
-  public register(data: any): Observable<any> {
-    const headers = new HttpHeaders({
-      Authorization: 'Bearer 12345678at',
-    });
-
-    const url = `${this.registerUrl}?key=${this.apiKey}`;
-    return this.http.post(url, data, { headers });
   }
 
   public logout(): Observable<any> {

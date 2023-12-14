@@ -61,18 +61,21 @@ export class ContactsListContainerComponent implements OnInit {
   }
 
   deleteContact(id: number): void {
-    this.deleteContactService.deleteContact(id).subscribe({
-      next: (response) => {
-        if (response.succeed) {
-          console.log('usuario borrado: ', response);
-          this.counter += 1;
-          console.log('Borrados: ', this.counter);
-          this.initContacts();
-        }
-      },
-      error: (error) => {
-        console.log('error de borrar usuario', error);
-      },
-    });
+    let close = confirm('¿Seguro que deseas eliminar el contacto?');
+    if (close) {
+      this.deleteContactService.deleteContact(id).subscribe({
+        next: (response) => {
+          if (response.succeed) {
+            console.log('usuario borrado: ', response);
+            this.counter += 1;
+            console.log('Borrados: ', this.counter);
+            this.initContacts();
+          }
+        },
+        error: (error) => {
+          console.log('error de borrar usuario', error);
+        },
+      });
+    }
   }
 }

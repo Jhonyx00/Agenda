@@ -18,6 +18,7 @@ import { Tag } from 'src/app/core/interfaces/tag';
 import { DynamicPhoneComponent } from 'src/app/shared/components/dynamic-phone/dynamic-phone.component';
 import { DynamicHostDirective } from 'src/app/shared/directives/dynamic-host.directive';
 import { UpdateContactService } from '../../services/update-contact.service';
+import { LocalStorageService } from 'src/app/shared/services/local-storage.service';
 
 @Component({
   selector: 'app-contact-info',
@@ -56,11 +57,11 @@ export class ContactInfoContainerComponent implements OnInit {
 
   //user data from local storage
   public contact: any;
-  private userString: string | null = null;
 
   constructor(
     private formBuilder: FormBuilder,
-    private updateContactService: UpdateContactService
+    private updateContactService: UpdateContactService,
+    private localStorageService: LocalStorageService
   ) {
     this.editContactForm = this.formBuilder.group({
       contactPhoto: new FormControl('', [Validators.required]),
@@ -82,11 +83,7 @@ export class ContactInfoContainerComponent implements OnInit {
   }
 
   public displayContactInfo() {
-    this.userString = localStorage.getItem('contact');
-    if (this.userString != null) {
-      this.contact = JSON.parse(this.userString);
-      console.log('Contact info:', this.contact);
-    }
+    this.contact = this.localStorageService.getItem('contact');
   }
 
   setFormData() {
@@ -114,7 +111,6 @@ export class ContactInfoContainerComponent implements OnInit {
         ])
       );
     });
-    //
 
     //PHONES
     this.phonesArray = this.editContactForm.get('contactPhones') as FormArray;
@@ -128,7 +124,6 @@ export class ContactInfoContainerComponent implements OnInit {
 
       this.phonesArray.push(phoneFormGroup);
     });
-    //
 
     //TAGS
     this.tagsArray = this.editContactForm.get('contactTags') as FormArray;
@@ -136,7 +131,6 @@ export class ContactInfoContainerComponent implements OnInit {
     this.contact.contactTags.map((tag: Tag) => {
       this.tagsArray.push(new FormControl(tag.tagValue));
     });
-    //
   }
 
   //getters for form arrays
@@ -219,6 +213,16 @@ export class ContactInfoContainerComponent implements OnInit {
 
     const contactData = this.editContactForm.value;
     const contactId = this.contact.contactId;
+
+    //descomentar lo de abajo justo cuando tenga resuelto lo de los correos y etiquetas
+    // this.localStorageService.setItem('contact', contactData);
+
+    console.log('info del form del usuaio', contactData);
+
+    console.log(
+      'info de usuario de localStorage',
+      this.localStorageService.getItem('contact')
+    );
 
     this.resetValues();
 

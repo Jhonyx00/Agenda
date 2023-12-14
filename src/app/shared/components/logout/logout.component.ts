@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
 export class LogoutComponent {
   constructor(private authService: AuthService, private router: Router) {}
   onLogout(): void {
-    let close = confirm('¿Seguro que deseas scerrar sesión?');
+    let close = confirm('¿Seguro que deseas cerrar sesión?');
     if (close) {
       this.authService.logout().subscribe({
         next: (response) => {

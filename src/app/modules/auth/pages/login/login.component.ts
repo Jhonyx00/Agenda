@@ -5,6 +5,7 @@ import { AuthService } from '../../services/auth.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { UserService } from 'src/app/modules/auth/services/user.service';
 import { UserInfoService } from 'src/app/shared/services/userInfo.service';
+import { LocalStorageService } from 'src/app/shared/services/local-storage.service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -16,7 +17,8 @@ export class LoginComponent {
     private authService: AuthService,
     private _snackBar: MatSnackBar,
     private userService: UserService,
-    private userInfoService: UserInfoService
+    private userInfoService: UserInfoService,
+    private localStorageService: LocalStorageService
   ) {}
 
   userControl: string = 'authUser';
@@ -42,8 +44,14 @@ export class LoginComponent {
               panelClass: ['green-snackbar'],
             });
 
-            localStorage.setItem('accessToken', response.result.accessToken);
-            localStorage.setItem('refreshToken', response.result.refreshToken);
+            this.localStorageService.setItem(
+              'accessToken',
+              response.result.accessToken
+            );
+            this.localStorageService.setItem(
+              'refreshToken',
+              response.result.refreshToken
+            );
 
             this.setUserInfo();
 

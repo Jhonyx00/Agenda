@@ -5,6 +5,7 @@ import { AuthService } from '../../services/auth.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { UserInfoService } from 'src/app/shared/services/userInfo.service';
 import { UserService } from '../../services/user.service';
+import { RegisterService } from '../../services/register.service';
 
 @Component({
   selector: 'app-register',
@@ -14,7 +15,7 @@ import { UserService } from '../../services/user.service';
 export class RegisterComponent {
   constructor(
     private router: Router,
-    private authService: AuthService,
+    private registerService: RegisterService,
     private _snackBar: MatSnackBar,
     private userService: UserService,
     private userInfoService: UserInfoService
@@ -23,48 +24,50 @@ export class RegisterComponent {
     this.router.navigate(['auth/login']);
   }
 
-  userControl: string = 'userName';
-  passwordControl: string = 'userPassword';
-  emailControl: string = 'userEmail';
+  userNameControl: string = 'userName';
+  userPasswordControl: string = 'userPassword';
+  userEmailControl: string = 'userEmail';
+  userPhotoContro: string = 'userPhoto';
 
-  formLogin = new FormGroup({
+  formRegister = new FormGroup({
     userName: new FormControl('', [
       Validators.minLength(2),
       Validators.required,
     ]),
+    userPhoto: new FormControl(''),
     userEmail: new FormControl('', [Validators.required]),
     userPassword: new FormControl('', [Validators.required]),
   });
 
   onSubmit(): void {
-    const userData = this.formLogin.value;
-    // if (this.formLogin.valid) {
-    this.authService.register(userData).subscribe({
-      next: (response) => {
-        if (response.succeed) {
-          console.log('datos: ', response);
-          this._snackBar.open('¡Bienvenido!', 'Aceptar', {
-            duration: 3000,
-            panelClass: ['green-snackbar'],
-          });
+    const userData = this.formRegister.value;
+    if (this.formRegister.valid) {
+      this.registerService.register(userData).subscribe({
+        next: (response) => {
+          if (response.succeed) {
+            console.log('datos: ', response);
+            this._snackBar.open('¡Bienvenido!', 'Aceptar', {
+              duration: 3000,
+              panelClass: ['green-snackbar'],
+            });
 
-          this.setUserInfo();
-          this.router.navigate(['home/contacts']);
-        }
-      },
-      error: (error) => {
-        console.log(error);
-        this._snackBar.open(
-          'Error en la comunicación con el servidor, intentelo más tarde',
-          'Aceptar',
-          {
-            duration: 3000,
-            panelClass: ['red-snackbar'],
+            this.setUserInfo();
+            this.router.navigate(['home/contacts']);
           }
-        );
-      },
-    });
-    // }
+        },
+        error: (error) => {
+          console.log(error);
+          this._snackBar.open(
+            'Error en la comunicación con el servidor, intentelo más tarde',
+            'Aceptar',
+            {
+              duration: 3000,
+              panelClass: ['red-snackbar'],
+            }
+          );
+        },
+      });
+    }
   }
 
   setUserInfo() {
